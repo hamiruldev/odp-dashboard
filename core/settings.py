@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'django_filters',
 
+    'branch',
     'users',
     'profiles',
     'blog',
@@ -98,44 +99,43 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 # DEV - local server - window
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': '131123',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+         'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+    }
+}
+
+# DEV - SF server
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': '131123',
-#         'USER': 'root',
-#         'PASSWORD': '',
+#         'NAME': 'tripleon_131123',
+#         'USER': 'tripleon_131123',
+#         'PASSWORD': '123agent123',
 #         'HOST': 'localhost',
 #         'PORT': '3306',
 #     }
 # }
 
-# DEV - SF server
-DATABASES = {
-
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tripleon_131123',
-        'USER': 'tripleon_131123',
-        'PASSWORD': '123agent123',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
-
-# PROD
+# PROD DIGITAL OCEAN
 # DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'tripleon_131123',
-#        'USER': 'tripleon_131123',
-#        'PASSWORD': '123agent123',
-#        'HOST': 'localhost',
-#        'PORT': '3306',
-#        # 'ENGINE': 'django.db.backends.sqlite3',
-#        # 'NAME': BASE_DIR / 'db.sqlite3',
-#    }
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'agent_inventory',
+#         'USER': 'agent2022',
+#         'PASSWORD': 'agent1234$#@!',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
 # }
-#
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

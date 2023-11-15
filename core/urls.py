@@ -15,6 +15,8 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+
     path('', lambda request: HttpResponse('200 Welcome to REST API Interface: Agent-Inventory'), name='home'),
     # API V1
     path('api/v1/', include(([
@@ -25,6 +27,7 @@ urlpatterns = [
         path('user/', include('users.urls')),
         path('profile/', include('profiles.urls')),
         path('blog/', include('blog_api.urls')),
+        path('branch/', include('branch.urls')),
         path('inventory/', include('inventory_api.urls')),
 
     ], 'api'), namespace='api-v1')),
