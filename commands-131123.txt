@@ -73,7 +73,9 @@ CARA HOST DJANGO DI CPANEL
 5. set passenger.wsgi and application nama 
 6. Restart server
 
+------------ cara run phpmyadmin di MacOS -------------
 
+export file mysql yang working di windows , tekan export . kemudian create db masukkan import file ke xampp macos
 
 --------------------------------------------------------- masukkan code ni kat passenger.wsgi----------------------------------------
 import os
