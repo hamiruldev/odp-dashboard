@@ -9,6 +9,7 @@ pip install djangorestframework
 1. activekan virtual env 
 - source /Users/hamirulhafizal/Desktop/oneDream-django/agent-inventory/myvenv/bin/activate (mac os)
 - (window PowerShell)
+    - c:/Users/Apis/Desktop/WaaS/oneDream/agent_inventory/myvenv/Scripts/activate.bat  
     - setup Venv kat local
     - python3 -m venv namavirtual(myvenv)
     -   # From command prompt

@@ -1,8 +1,9 @@
 # branch/serializers.py
 from rest_framework import serializers
-from .models import Task
+from .models import Master
 
-class TaskSerializer(serializers.ModelSerializer):
+class MasterSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Task
-        fields = '__all__'
+        model = Master
+        fields = ('name', 'location', 'is_hq', 'description')
+

@@ -16,13 +16,11 @@ class UserAdminConfig(UserAdmin):
 
     model = NewUser
     search_fields = ('email', 'user_name', 'first_name',)
-    list_filter = ('email', 'user_name', 'first_name', )
+    # list_filter = ('email', 'user_name', 'first_name', )
     ordering = ('-user_profile__view_count',)
-    list_display = ('user_name_link', 'user_profile_link',
-                    'user_view', 'email', 'is_active', 'introducer', 'groupId', 'branchId')
+    list_display = ('user_name_link', 'user_profile_link', 'email', 'is_active', 'introducer', 'groupId', 'branchId')
     fieldsets = (
-        (None, {'fields': ('email', 'user_name', 'first_name',
-         'user_view', 'introducer', 'groupId', 'branchId')}),
+        (None, {'fields': ('email', 'user_name', 'first_name', 'introducer', 'groupId', 'branchId')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
         ('Personal', {'fields': ('about',)}),
     )
@@ -62,7 +60,7 @@ class UserAdminConfig(UserAdmin):
         else:
             return 0
 
-    user_profile_link.short_description = 'User Profile'
+    user_profile_link.short_description = 'User Link'
     user_name_link.short_description = 'User Name'
     user_view.short_description = 'User view'
     user_view.admin_order_field = 'user_profile__view_count'
