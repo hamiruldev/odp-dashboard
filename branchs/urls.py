@@ -1,12 +1,12 @@
 # branch/urls.py
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import MasterViewSet
+from .views import BranchViewSet
 
-app_name = 'branch'
+app_name = 'branchs'
 
 router = DefaultRouter()
-router.register(r'masters', MasterViewSet, basename='master')
+router.register(r'branch', BranchViewSet, basename='branch')
 
 urlpatterns = [
     path('api/', include(router.urls)),

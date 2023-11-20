@@ -37,7 +37,6 @@ class Profile(models.Model):
     # Referal
     groupId = models.IntegerField(default=0)
     introducer = models.CharField(max_length=200, null=True)
-    groupId = models.IntegerField(default=0)
 
     def __str__(self):
         return self.email

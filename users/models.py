@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-
+from branchs.models import Branch
 
 def get_upload_path(instance, filename):
     if instance:
@@ -55,8 +55,11 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
 
     introducer = models.CharField(max_length=200, null=True)
     groupId = models.IntegerField(default=0)
-    branchId = models.CharField(max_length=200, null=True)
+    # branchId = models.CharField(max_length=200, null=True)
+    branch = models.ForeignKey(Branch, on_delete=models.PROTECT, null=True)
 
+    # branch = models.ManyToManyField(Branchs, help_text="Select a branch for this user")
+    
     user_view = models.IntegerField(default=0)
 
     objects = CustomAccountManager()
@@ -73,10 +76,10 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
         super().save(*args, **kwargs)
 
 
-class Group(models.Model):
-    name = models.CharField(max_length=100)
-    logoUrl = models.ImageField(
-        _("LogoUrl"), upload_to=get_upload_path, blank=True, null=True)
-    empires = models.PositiveIntegerField()
-    branch = models.CharField(max_length=100)
-    founder = models.CharField(max_length=100)
+# class Group(models.Model):
+#     name = models.CharField(max_length=100)
+#     logoUrl = models.ImageField(
+#         _("LogoUrl"), upload_to=get_upload_path, blank=True, null=True)
+#     empires = models.PositiveIntegerField()
+#     branch = models.CharField(max_length=100)
+#     founder = models.CharField(max_length=100)

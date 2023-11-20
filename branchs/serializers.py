@@ -1,9 +1,9 @@
 # branch/serializers.py
 from rest_framework import serializers
-from .models import Master
+from .models import Branch
 
-class MasterSerializer(serializers.ModelSerializer):
+class BranchSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Master
+        model = Branch
         fields = ('name', 'location', 'is_hq', 'description')
 

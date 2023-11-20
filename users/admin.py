@@ -18,9 +18,9 @@ class UserAdminConfig(UserAdmin):
     search_fields = ('email', 'user_name', 'first_name',)
     # list_filter = ('email', 'user_name', 'first_name', )
     ordering = ('-user_profile__view_count',)
-    list_display = ('user_name_link', 'user_profile_link', 'email', 'is_active', 'introducer', 'groupId', 'branchId')
+    list_display = ('user_name_link', 'user_profile_link', 'email', 'is_active', 'introducer', 'groupId', 'branch')
     fieldsets = (
-        (None, {'fields': ('email', 'user_name', 'first_name', 'introducer', 'groupId', 'branchId')}),
+        (None, {'fields': ('email', 'user_name', 'first_name', 'introducer', 'groupId', 'branch')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
         ('Personal', {'fields': ('about',)}),
     )
@@ -30,7 +30,7 @@ class UserAdminConfig(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'user_name', 'first_name', 'password1', 'password2', 'is_active', 'is_staff', 'user_view', 'introducer', 'groupId', 'branchId',)}
+            'fields': ('email', 'user_name', 'first_name', 'password1', 'password2', 'is_active', 'is_staff', 'user_view', 'introducer', 'groupId', 'branch',)}
          ),
     )
 

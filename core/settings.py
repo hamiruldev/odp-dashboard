@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'django_filters',
 
-    'branch',
+    'branchs',
     'users',
     'profiles',
     'blog',
