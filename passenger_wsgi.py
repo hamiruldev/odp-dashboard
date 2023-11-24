@@ -12,7 +12,7 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'core.settings'
 # Set script name for the PATH_INFO fix below
 # SCRIPT_NAME = os.getcwd()
 # SCRIPT_NAME = '/home/tripleon/agent-inventory'
-SCRIPT_NAME = '/home/tripleon/agent.tripleonestudio.com'
+SCRIPT_NAME = '/home/tripleon/django.tripleonestudio.com'
 
 
 class PassengerPathInfoFix(object):
