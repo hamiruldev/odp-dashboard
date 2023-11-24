@@ -39,7 +39,7 @@ class CustomUserRegistration(APIView):
             profile.firstName = user.first_name
             profile.email = user.email
             profile.introducer = user.introducer
-            profile.groupId = Profile().get_group_id()
+            # profile.groupId = Profile().get_group_id()
             profile.save()
             if user:
                 json = serializer.data

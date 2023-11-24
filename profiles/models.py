@@ -35,7 +35,7 @@ class Profile(models.Model):
     view_count = models.IntegerField(default=0)
 
     # Referal
-    groupId = models.IntegerField(default=0)
+    # groupId = models.IntegerField(default=0)
     introducer = models.CharField(max_length=200, null=True)
 
     def __str__(self):

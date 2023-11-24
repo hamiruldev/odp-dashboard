@@ -31,11 +31,10 @@ class CustomUserSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(required=True)
     password = serializers.CharField(min_length=8, write_only=True)
     introducer = serializers.CharField(required=True)
-    groupId = serializers.IntegerField(default=0)
 
     class Meta:
 
-        fields = ('email', 'user_name', 'password', 'introducer', 'groupId' )
+        fields = ('email', 'user_name', 'password', 'introducer' )
         extra_kwargs = {'password': {'write_only': True}}
         model = NewUser
 
@@ -68,5 +67,4 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NewUser
-        fields = ('id', 'is_superuser', 'user_name', 'password', 'first_name', 'groupId' , 'introducer'
-                  'email', 'is_staff', 'is_active', 'about')
+        fields = ('id', 'is_superuser', 'user_name', 'password', 'first_name' , 'introducer', 'email', 'is_staff', 'is_active', 'about')

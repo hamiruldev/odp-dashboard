@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from branchs.models import Branch
+from teams.models import Team
 
 def get_upload_path(instance, filename):
     if instance:
@@ -54,10 +55,11 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
 
     introducer = models.CharField(max_length=200, null=True)
-    groupId = models.IntegerField(default=0)
+    # groupId = models.IntegerField(default=0)
     # branchId = models.CharField(max_length=200, null=True)
     branch = models.ForeignKey(Branch, on_delete=models.PROTECT, null=True)
-
+    # team = models.ForeignKey('teams.Team', on_delete=models.SET_NULL, null=True, blank=True) 
+    team = models.ForeignKey('teams.Team', on_delete=models.SET_NULL, null=True, blank=True) 
     # branch = models.ManyToManyField(Branchs, help_text="Select a branch for this user")
     
     user_view = models.IntegerField(default=0)
