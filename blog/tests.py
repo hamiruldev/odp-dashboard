@@ -9,7 +9,7 @@ class Test_Create_Post(TestCase):
     @classmethod
     def setUpTestData(cls):
         test_category = Category.objects.create(name='django')
-        testuser1 = NewUser.objects.create_user(email='test@test.com', user_name='test_user1', first_name='test1', password='123456789')
+        testuser1 = NewUser.objects.create_user(email='test@test.com', username='test_user1', first_name='test1', password='123456789')
         testphotogallery = PhotoGallery.objects.create(id=1)
         testpost = Post.objects.create(
             category_id=1, 

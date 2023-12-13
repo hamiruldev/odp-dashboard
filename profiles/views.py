@@ -32,8 +32,8 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
     permission_classes = [ProfileUserWritePermission]
 
     def get_object(self, queryset=None, **kwargs):
-        user_name = self.kwargs.get('user_name')
-        profile = get_object_or_404(Profile, user__user_name=user_name)
+        username = self.kwargs.get('username')
+        profile = get_object_or_404(Profile, user__username=username)
 
         # Update the view count on each visit to this post.
         if profile:
@@ -43,4 +43,4 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
             # Or
             profile.update_views()
 
-        return get_object_or_404(Profile, user__user_name=user_name)
+        return get_object_or_404(Profile, user__username=username)

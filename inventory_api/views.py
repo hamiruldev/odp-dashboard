@@ -38,7 +38,7 @@ class InventoryList(generics.ListCreateAPIView):
     # Django Filter Backend
     filter_backends = [filters.DjangoFilterBackend]
     filterset_class = CustomInventoryFilter
-    # filterset_fields = ['realtor__user__user_name']
+    # filterset_fields = ['realtor__user__username']
 
     def get_queryset(self):
         user = self.request.user

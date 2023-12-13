@@ -17,9 +17,9 @@ class PostTests(APITestCase):
     def test_create_post(self):
 
         self.test_category = Category.objects.create(name='django')
-        self.testuser1 = NewUser.objects.create_user(user_name='test_user1', email='test@test.com', first_name='test1', password='123456789')
+        self.testuser1 = NewUser.objects.create_user(username='test_user1', email='test@test.com', first_name='test1', password='123456789')
 
-        self.client.login(user_name=self.testuser1.user_name, password='123456789')
+        self.client.login(username=self.testuser1.username, password='123456789')
 
         data = {
             "title": "new", 
@@ -46,10 +46,10 @@ class PostTests(APITestCase):
         client = APIClient()
 
         self.test_category = Category.objects.create(name='django')
-        # self.testuser1 = NewUser.objects.create_user(user_name='test_user1', password='123456789')
-        self.testuser1 = NewUser.objects.create_user(user_name='test_user1', email='test@test.com', first_name='test1', password='123456789')
-        # self.testuser2 = NewUser.objects.create_user(user_name='test_user2', password='123456789')
-        self.testuser2 = NewUser.objects.create_user(user_name='test_user2', email='test2@test.com', first_name='test2', password='123456789')
+        # self.testuser1 = NewUser.objects.create_user(username='test_user1', password='123456789')
+        self.testuser1 = NewUser.objects.create_user(username='test_user1', email='test@test.com', first_name='test1', password='123456789')
+        # self.testuser2 = NewUser.objects.create_user(username='test_user2', password='123456789')
+        self.testuser2 = NewUser.objects.create_user(username='test_user2', email='test2@test.com', first_name='test2', password='123456789')
 
         testpost = Post.objects.create(
             category_id=1, title='Post Title', excerpt='post excerpt', content='post content', 

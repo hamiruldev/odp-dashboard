@@ -3,10 +3,11 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from profiles.models import Profile
+from branchs.models import Branch
 
 def get_upload_path(instance, filename):
     if instance:
-        return f'inventory/user_{instance.realtor.user.user_name}/gallery/{filename}'
+        return f'inventory/user_{instance.realtor.user.username}/gallery/{filename}'
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -86,6 +87,8 @@ class Inventory(models.Model):
     inventory_date = models.DateTimeField(default=timezone.now)
 
     realtor = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='inventories')
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE, default=1)
+    
 
     view_count = models.IntegerField(default=0)
 

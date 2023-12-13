@@ -7,3 +7,4 @@ media/
 venv/
 core/settings.py
 myvenv
+.venv

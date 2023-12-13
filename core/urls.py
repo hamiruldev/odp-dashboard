@@ -12,9 +12,15 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from core.admin import admin_site
+
+from users.views import signup
+
 
 urlpatterns = [
+    
     path('admin/', admin.site.urls),
+    path('signup/', signup, name='signup'),
 
 
     path('', lambda request: HttpResponse('200 Welcome to REST API Interface: Agent-Inventory'), name='home'),
@@ -46,11 +52,18 @@ urlpatterns = [
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
-admin.site.site_header = 'One Dream Property | Listing System'
 
+
+admin.site.site_header = 'One Dream Property | Listing System'
 admin.site.site_title = 'Administration'
 admin.site.site_url = 'http://onedreamproperty.com.my/'
 admin.site.index_title = 'Dashboard'
+    
+
+
+
+# Replace the default admin site with your custom site
+
 
 
 # urlpatterns += [ re_path(r'^.*', TemplateView.as_view(template_name='index.html')) ]

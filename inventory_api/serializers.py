@@ -17,8 +17,8 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class InventorySerializer(serializers.ModelSerializer):
-    user_name = serializers.CharField(
-        source='realtor.user.user_name', required=False)
+    username = serializers.CharField(
+        source='realtor.user.username', required=False)
     phone_number = serializers.CharField(
         source='realtor.phone', required=False)
 
@@ -31,6 +31,6 @@ class InventorySerializer(serializers.ModelSerializer):
                   'size', 'carpark', 'otherInfo',
                   'featureImage', 'photo_1', 'photo_2', 'photo_3', 'photo_4', 'photo_5',
                   'photo_6', 'photo_7', 'photo_8', 'photo_9', 'photo_10', 'video',
-                  'realtor', 'user_name', 'phone_number', 'inventory_date', 'view_count'
+                  'realtor', 'username', 'phone_number', 'inventory_date', 'view_count'
                   )
         model = Inventory

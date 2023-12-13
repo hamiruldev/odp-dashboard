@@ -14,7 +14,7 @@ from .serializers import CustomUserSerializer, CustomUserTokenObtainPairSerializ
 from profiles.models import Profile
 from profiles.serializers import UserProfileSerializer
 
-from django.shortcuts import get_object_or_404
+# from django.shortcuts import get_object_or_404
 
 from rest_framework import generics
 
@@ -25,6 +25,12 @@ from django.core.mail import send_mail, EmailMultiAlternatives
 import random
 
 from django.conf import settings
+
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+from users.admin import CustomUserCreationForm  # Import your custom form
 
 
 class CustomUserRegistration(APIView):
@@ -73,8 +79,8 @@ class CustomResetPassword(generics.RetrieveUpdateAPIView):
     # serializer = CustomUserSerializer(data=request.data)
 
     def get_object(self, queryset=None, **kwargs):
-        item = self.kwargs.get('user_name')
-        user = get_object_or_404(NewUser, user_name=item)
+        item = self.kwargs.get('username')
+        user = get_object_or_404(NewUser, username=item)
         email = user.email
 
         rand = random.randint(1000, 2000)
@@ -94,7 +100,7 @@ class CustomResetPassword(generics.RetrieveUpdateAPIView):
         msg.attach_alternative(html_content, "text/html")
         msg.send()
 
-        return get_object_or_404(NewUser, user_name=item)
+        return get_object_or_404(NewUser, username=item)
 
 
 class CustomNewPassword(generics.RetrieveUpdateAPIView):
@@ -105,8 +111,8 @@ class CustomNewPassword(generics.RetrieveUpdateAPIView):
     def post(self, request, **kwargs):
 
         item = self.kwargs.get('temPass')
-        username = self.kwargs.get('user_name')
-        user = get_object_or_404(NewUser, user_name=username)
+        username = self.kwargs.get('username')
+        user = get_object_or_404(NewUser, username=username)
 
         if user.check_password(item):
             dataBody = request.data["password"]
@@ -118,3 +124,17 @@ class CustomNewPassword(generics.RetrieveUpdateAPIView):
             return JsonResponse(userJson.data, status=201)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        
+def signup(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            # return redirect('home')  # Replace 'home' with the URL name of your home page
+            return redirect('admin')  # Replace 'home' with the URL name of your home page
+    else:
+        form = CustomUserCreationForm()
+
+    return render(request, 'admin/registration/signup.html', {'form': form})

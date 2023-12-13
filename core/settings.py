@@ -42,13 +42,16 @@ ALLOWED_HOSTS = ['onedream.dynamicdigital.guru',
 # Application definition
 
 INSTALLED_APPS = [
+    # 'admin_reorder',
+        
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-        
+    
     'teams',
     'branchs',
     'users',
@@ -57,6 +60,7 @@ INSTALLED_APPS = [
     'blog_api',
     'inventory',
     'inventory_api',
+    
 
     'corsheaders',
     'rest_framework',
@@ -75,6 +79,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'admin_reorder.middleware.ModelAdminReorder',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -102,27 +108,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 # DEV - local server - window
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': '131123',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#          'OPTIONS': {
-#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-#         },
-#     }
-# }
-
-# DEV - SF server
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tripleon_131123',
-        'USER': 'tripleon_131123',
-        'PASSWORD': '123agent123',
+        'NAME': '131123',
+        'USER': 'root',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
@@ -130,6 +121,18 @@ DATABASES = {
          },
     }
 }
+
+# DEV - SF server
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'tripleon_131123',
+#         'USER': 'tripleon_131123',
+#         'PASSWORD': '123agent123',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 # PROD DIGITAL OCEAN
 # DATABASES = {
@@ -182,25 +185,26 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # Static Root masa kat deployment
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # staticfiles kat development
 # STATICFILES_DIRS = (
 #   os.path.join(BASE_DIR, 'static'),
 # )
+# global staticfiles kat production
+STATICFILES_DIRS = (
+  os.path.join(BASE_DIR, 'globalstaticfiles'),
+)
 
-# STATICILES_DIRS= [os.path.join(BASE_DIR,'testcss')]
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
+# Absolute filesystem path to the directory that will hold static files at production, can test when debug is False
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Absolute filesystem path to the directory that will hold static files
-# STATIC_ROOT = BASE_DIR / "staticfiles"
+#folder name for static asset kat development, dia akan pakai bila debug set as true
+STATIC_URL = '/static/'
 
 # Media Settings
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
-
 
 
 
@@ -279,3 +283,25 @@ DATA_UPLOAD_MAX_MEMORY = 104857600
 
 # import django_heroku
 # django_heroku.settings(locals())
+
+
+# ADMIN_REORDER = (
+#     # Reorder app models  
+#     {
+#         'app': 'auth',
+#         'label': 'List Unit',
+#         'models': (
+#             {'model': 'inventory.Inventory' ,'label' : 'All Listing' },
+#             {'model': 'inventory.Category' ,'label' : 'Category' },
+#             {'model': 'inventory.PropertyType' ,'label' : 'Property Type' },
+#     )},
+        
+#     {'app': 'auth','label': 'User', 'models': (
+        
+#         {'model': 'branchs.Branch' ,'label' : 'Branch' },
+#         {'model': 'teams.Team' ,'label' : 'Team' },
+#         {'model': 'users.NewUser' ,'label' : 'Agent' }, 
+#         # {'model': 'inventory.Inventory' ,'label' : 'Inventory' }
+    
+#       )},
+# )

@@ -1,6 +1,7 @@
 from django.contrib import admin
 from users.models import NewUser
 from profiles.models import Profile
+from django.contrib.auth.models import Group
 
 from django.contrib.auth.admin import UserAdmin
 from django.forms import TextInput, Textarea, CharField
@@ -11,59 +12,77 @@ from django.utils.html import format_html
 from django.shortcuts import get_list_or_404
 from django.db.models import Sum
 
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = NewUser
+        fields = ('email', 'username', 'first_name', 'introducer', 'branch', 'team')
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta(UserChangeForm.Meta):
+        model = NewUser
+        fields = ('email', 'username', 'first_name', 'is_active', 'is_staff', 'user_view', 'introducer', 'branch', 'team')
+
 
 class UserAdminConfig(UserAdmin):
 
     model = NewUser
-    search_fields = ('email', 'user_name', 'first_name',)
-    # list_filter = ('email', 'user_name', 'first_name', )
+    search_fields = ('email', 'username', 'first_name',)
+    list_filter = ('team', 'branch', 'introducer',)
     ordering = ('-user_profile__view_count',)
-    list_display = ('user_name_link', 'user_profile_link', 'email', 'is_active', 'introducer', 'branch', 'team')
-    fieldsets = (
-        (None, {'fields': ('email', 'user_name', 'first_name', 'introducer', 'branch', 'team')}),
-        ('Permissions', {'fields': ('is_staff', 'is_active')}),
-        ('Personal', {'fields': ('about',)}),
-    )
+    list_display = ('username_link', 'user_profile_link', 'introducer', 'branch', 'team', 'is_active', 'get_group_names')
+    
+    add_form = CustomUserCreationForm
+    form = CustomUserChangeForm
+
     formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows': 20, 'cols': 60})},
     }
+
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'user_name', 'first_name', 'password1', 'password2', 'is_active', 'is_staff', 'user_view', 'introducer', 'branch', 'team')}
+            'fields': (
+                        'email',
+                        'username',
+                        'password1', 'password2',
+                        'groups'),
+            },
          ),
+        (("Personal info"), {"fields": ("first_name", "last_name", 'is_active', 'is_staff')}),
+        (("Referal"), {"fields": ("introducer", "team", "branch")}),
     )
+    
 
-    def user_name_link(self, obj):
+    def username_link(self, obj):
         url = reverse('admin:{}_{}_change'.format(
-            obj._meta.app_label,  obj._meta.model_name),  args=[obj.id])
-        return format_html('<a href="{}">{}</a>', url, obj.user_name)
+            obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        return format_html('<a href="{}">{}</a>', url, obj.username)
 
     def user_profile_link(self, obj):
         profile_url = "https://onedreamproperty.com.my/{}".format(
-            obj.user_name)
-        return format_html('<a href="{}" target="_blank">{}</a>', profile_url, obj.user_name)
-
-    # def user_view(self, obj):
-
-    #     profile = get_list_or_404(Profile, user__user_name=obj.user_name)
-
-    #     for item in profile:
-    #         return format_html('{}', item.view_count)
+            obj.username)
+        return format_html('<a href="{}" target="_blank">{}</a>', profile_url, obj.username)
 
     def user_view(self, obj):
         total_view_count = Profile.objects.filter(
-            user__user_name=obj.user_name).aggregate(Sum('view_count'))['view_count__sum']
+            user__username=obj.username).aggregate(Sum('view_count'))['view_count__sum']
 
         if total_view_count is not None:
             return total_view_count
         else:
             return 0
 
+    def get_group_names(self, obj):
+        return ", ".join([group.name for group in obj.groups.all()])
+
+    get_group_names.short_description = 'Groups'
+
     user_profile_link.short_description = 'User Link'
-    user_name_link.short_description = 'User Name'
+    username_link.short_description = 'User Name'
     user_view.short_description = 'User view'
     user_view.admin_order_field = 'user_profile__view_count'
-
 
 admin.site.register(NewUser, UserAdminConfig)

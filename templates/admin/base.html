@@ -3,10 +3,13 @@
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}">
 <head>
 <title>{% block title %}{% endblock %}</title>
-<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
+<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "css/admin/base.css" %}{% endblock %}">
 {% if not is_popup and is_nav_sidebar_enabled %}
   <link rel="stylesheet" type="text/css" href="{% static "admin/css/nav_sidebar.css" %}">
   <script src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>
+  <!-- <script src="{% static 'js/admin/test.js' %}" defer></script> -->
+
+  
 {% endif %}
 {% block extrastyle %}{% endblock %}
 {% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">{% endif %}
@@ -84,6 +87,7 @@
           {% endif %}
         {% endblock messages %}
         <!-- Content -->
+        <!-- <button  onclick="TriggerMyAlert()">test</button> -->
         <div id="content" class="{% block coltype %}colM{% endblock %}">
           {% block pretitle %}{% endblock %}
           {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}

@@ -7,7 +7,7 @@ from users.models import NewUser
 
 def get_upload_path(instance, filename):
     if instance:
-        return f'profile_photo/user_{instance.user.user_name}/{filename}'
+        return f'profile_photo/user_{instance.user.username}/{filename}'
 
 
 class Profile(models.Model):
@@ -35,7 +35,6 @@ class Profile(models.Model):
     view_count = models.IntegerField(default=0)
 
     # Referal
-    # groupId = models.IntegerField(default=0)
     introducer = models.CharField(max_length=200, null=True)
 
     def __str__(self):

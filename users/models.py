@@ -4,6 +4,8 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from branchs.models import Branch
 from teams.models import Team
+from django.urls import reverse
+# from django.contrib.admin import Group
 
 def get_upload_path(instance, filename):
     if instance:
@@ -12,7 +14,7 @@ def get_upload_path(instance, filename):
 
 class CustomAccountManager(BaseUserManager):
 
-    def create_superuser(self, email, user_name, first_name, password, **other_fields):
+    def create_superuser(self, email, username, first_name, password, **other_fields):
 
         other_fields.setdefault('is_staff', True)
         other_fields.setdefault('is_superuser', True)
@@ -25,15 +27,15 @@ class CustomAccountManager(BaseUserManager):
             raise ValueError(
                 'Superuser must be assigned to is_superuser=True.')
 
-        return self.create_user(email, user_name, first_name, password, **other_fields)
+        return self.create_user(email, username, first_name, password, **other_fields)
 
-    def create_user(self, email, user_name, first_name, password, **other_fields):
+    def create_user(self, email, username, first_name, password, **other_fields):
 
         if not email:
             raise ValueError(_('You must provide an email address'))
 
         email = self.normalize_email(email)
-        user = self.model(email=email, user_name=user_name,
+        user = self.model(email=email, username=username,
                           first_name=first_name, **other_fields)
         user.set_password(password)
         user.save()
@@ -43,38 +45,54 @@ class CustomAccountManager(BaseUserManager):
 class NewUser(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(_('email address'), unique=True)
-    user_name = models.CharField(max_length=150, unique=True)
-    serialize_user_name = models.CharField(
+    # user_usernamename = models.CharField(max_length=150, unique=True)
+    
+    username = models.CharField(
+        _("username"),
+        max_length=150,
+        unique=True,
+        default='',
+        help_text=_(
+            "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+        ),
+        error_messages={
+            "unique": _("A user with that username already exists."),
+        },
+    )
+    
+    serialize_username = models.CharField(
         max_length=150, default='', unique=False)
 
     first_name = models.CharField(max_length=150, blank=True)
+    last_name = models.CharField(_("last name"), max_length=150, blank=True)
+    
+    date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
+    
     start_date = models.DateTimeField(default=timezone.now)
     about = models.TextField(_(
         'about'), max_length=500, blank=True)
+    
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
-    introducer = models.CharField(max_length=200, null=True)
-    # groupId = models.IntegerField(default=0)
-    # branchId = models.CharField(max_length=200, null=True)
-    branch = models.ForeignKey(Branch, on_delete=models.PROTECT, null=True)
-    # team = models.ForeignKey('teams.Team', on_delete=models.SET_NULL, null=True, blank=True) 
-    team = models.ForeignKey('teams.Team', on_delete=models.SET_NULL, null=True, blank=True) 
-    # branch = models.ManyToManyField(Branchs, help_text="Select a branch for this user")
+    introducer = models.CharField(max_length=200, null=True, blank=True)
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True, blank=True)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, default=None, blank=True) 
+    # group = model.TextChoices(Group)
     
-    user_view = models.IntegerField(default=0)
+    user_view = models.IntegerField(default=0, null=True, blank=True)
 
     objects = CustomAccountManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['user_name', 'first_name']
+    REQUIRED_FIELDS = ['username', 'first_name']
 
     def __str__(self):
-        return self.user_name
+        return self.username
 
     def save(self, *args, **kwargs):
-        if not self.serialize_user_name:
-            self.serialize_user_name = self.user_name.upper()
+        if not self.serialize_username:
+            self.serialize_username = self.username.upper()
         super().save(*args, **kwargs)
 
 
