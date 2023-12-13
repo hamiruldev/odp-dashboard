@@ -203,6 +203,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'globalstaticfiles')
 #folder name for static asset kat development, dia akan pakai bila debug set as true
 STATIC_URL = '/static/'
 
+IMPORT_EXPORT_USE_TRANSACTIONS = False
+
 # Media Settings
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
