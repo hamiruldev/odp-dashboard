@@ -5,7 +5,6 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 from branchs.models import Branch
 from teams.models import Team
 from django.urls import reverse
-# from django.contrib.admin import Group
 
 def get_upload_path(instance, filename):
     if instance:
@@ -45,7 +44,6 @@ class CustomAccountManager(BaseUserManager):
 class NewUser(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(_('email address'), unique=True)
-    # user_usernamename = models.CharField(max_length=150, unique=True)
     
     username = models.CharField(
         _("username"),
@@ -75,10 +73,9 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
-    introducer = models.CharField(max_length=200, null=True, blank=True)
+    introducer = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True, blank=True)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, default=None, blank=True) 
-    # group = model.TextChoices(Group)
     
     user_view = models.IntegerField(default=0, null=True, blank=True)
 
@@ -94,12 +91,3 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
         if not self.serialize_username:
             self.serialize_username = self.username.upper()
         super().save(*args, **kwargs)
-
-
-# class Group(models.Model):
-#     name = models.CharField(max_length=100)
-#     logoUrl = models.ImageField(
-#         _("LogoUrl"), upload_to=get_upload_path, blank=True, null=True)
-#     empires = models.PositiveIntegerField()
-#     branch = models.CharField(max_length=100)
-#     founder = models.CharField(max_length=100)

@@ -8,6 +8,7 @@ from django import forms
 
 class TeamAdmin(admin.ModelAdmin):
     list_display = ('name','founder', 'about', 'empires')
+    autocomplete_fields = ['founder']
 
 admin.site.register(Team, TeamAdmin)
 

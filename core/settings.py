@@ -60,13 +60,12 @@ INSTALLED_APPS = [
     'blog_api',
     'inventory',
     'inventory_api',
-    
 
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'django_filters',
-    
+    'import_export',
    
 ]
 
@@ -200,6 +199,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'globalstaticfiles')
 
 # Absolute filesystem path to the directory that will hold static files at production, can test when debug is False
 #STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# staticfiles kat development
+# STATICFILES_DIRS = (
+#   os.path.join(BASE_DIR, 'globalstaticfiles'),
+# )
+
+
 
 #folder name for static asset kat development, dia akan pakai bila debug set as true
 STATIC_URL = '/static/'
