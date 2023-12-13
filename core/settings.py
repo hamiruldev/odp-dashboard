@@ -125,6 +125,9 @@ DATABASES = {
         'PASSWORD': '123agent123',
         'HOST': 'localhost',
         'PORT': '3306',
+        'OPTIONS': {
+             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+         },
     }
 }
 
@@ -176,7 +179,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
+
 # Static Root masa kat deployment
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
