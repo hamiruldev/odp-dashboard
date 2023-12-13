@@ -107,34 +107,34 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 # DEV - local server - window
-DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.mysql',
-       'NAME': '131123',
-       'USER': 'root',
-       'PASSWORD': '',
-       'HOST': 'localhost',
-       'PORT': '3306',
-       'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
-   }
-}
+#DATABASES = {
+#   'default': {
+#       'ENGINE': 'django.db.backends.mysql',
+#       'NAME': '131123',
+#       'USER': 'root',
+#       'PASSWORD': '',
+#       'HOST': 'localhost',
+#       'PORT': '3306',
+#       'OPTIONS': {
+#            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#        },
+#   }
+#}
 
-# DEV - SF server
-# DATABASES = {
-#      'default': {
-#          'ENGINE': 'django.db.backends.mysql',
-#          'NAME': 'tripleon_131123',
-#          'USER': 'tripleon_131123',
-#          'PASSWORD': '123agent123',
-#          'HOST': 'localhost',
-#          'PORT': '3306',
-#          'OPTIONS': {
-#              'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-#          },
-#      }
-# }
+#DEV - SF server
+DATABASES = {
+      'default': {
+          'ENGINE': 'django.db.backends.mysql',
+          'NAME': 'tripleon_131123',
+          'USER': 'tripleon_131123',
+          'PASSWORD': '123agent123',
+          'HOST': 'localhost',
+          'PORT': '3306',
+          'OPTIONS': {
+              'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+          },
+      }
+}
 
 # PROD DIGITAL OCEAN
 # DATABASES = {

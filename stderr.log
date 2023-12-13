@@ -3973,3 +3973,29 @@ Not Found: /static/css/img/icon-yes.svg
 Not Found: /static/css/img/icon-yes.svg
 Not Found: /static/css/img/icon-addlink.svg
 Not Found: /static/css/img/icon-yes.svg
+[UID:1551][4028347] Child process with pid: 4029274 was killed by signal: 15, core dump: 0
+Internal Server Error: /admin/inventory/category/process_import/
+Traceback (most recent call last):
+  File "/home/tripleon/virtualenv/repositories/odp-dashboard/3.8/lib/python3.8/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/tripleon/virtualenv/repositories/odp-dashboard/3.8/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/tripleon/virtualenv/repositories/odp-dashboard/3.8/lib/python3.8/site-packages/django/utils/decorators.py", line 133, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/home/tripleon/virtualenv/repositories/odp-dashboard/3.8/lib/python3.8/site-packages/django/views/decorators/cache.py", line 62, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/home/tripleon/virtualenv/repositories/odp-dashboard/3.8/lib/python3.8/site-packages/django/contrib/admin/sites.py", line 242, in inner
+    return view(request, *args, **kwargs)
+  File "/home/tripleon/virtualenv/repositories/odp-dashboard/3.8/lib/python3.8/site-packages/django/utils/decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/home/tripleon/virtualenv/repositories/odp-dashboard/3.8/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/tripleon/virtualenv/repositories/odp-dashboard/3.8/lib/python3.8/site-packages/import_export/admin.py", line 172, in process_import
+    data = tmp_storage.read()
+  File "/home/tripleon/virtualenv/repositories/odp-dashboard/3.8/lib/python3.8/site-packages/import_export/tmp_storages.py", line 32, in read
+    with self._open(mode=self.read_mode) as file:
+  File "/home/tripleon/virtualenv/repositories/odp-dashboard/3.8/lib/python3.8/site-packages/import_export/tmp_storages.py", line 43, in _open
+    return open(self.get_full_path(), mode, encoding=self.encoding)
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpim77zg4c'
+Not Found: /static/css/img/icon-yes.svg
+Not Found: /static/css/img/icon-addlink.svg
