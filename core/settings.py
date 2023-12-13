@@ -108,31 +108,34 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 # DEV - local server - window
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': '131123',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        'OPTIONS': {
-             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-         },
-    }
-}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': '131123',
+#        'USER': 'root',
+#        'PASSWORD': '',
+#        'HOST': 'localhost',
+#        'PORT': '3306',
+#        'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#         },
+#    }
+#}
 
 # DEV - SF server
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'tripleon_131123',
-#         'USER': 'tripleon_131123',
-#         'PASSWORD': '123agent123',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-# }
+DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.mysql',
+         'NAME': 'tripleon_131123',
+         'USER': 'tripleon_131123',
+         'PASSWORD': '123agent123',
+         'HOST': 'localhost',
+         'PORT': '3306',
+         'OPTIONS': {
+             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+         },
+     }
+}
 
 # PROD DIGITAL OCEAN
 # DATABASES = {
@@ -182,22 +185,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = 'static/'
-
 # Static Root masa kat deployment
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'globalstaticfiles')
 
 # staticfiles kat development
 # STATICFILES_DIRS = (
 #   os.path.join(BASE_DIR, 'static'),
 # )
+
 # global staticfiles kat production
-STATICFILES_DIRS = (
-  os.path.join(BASE_DIR, 'globalstaticfiles'),
-)
+#STATICFILES_DIRS = (
+#  os.path.join(BASE_DIR, 'globalstaticfiles'),
+#)
 
 # Absolute filesystem path to the directory that will hold static files at production, can test when debug is False
-STATIC_ROOT = BASE_DIR / "staticfiles"
+#STATIC_ROOT = BASE_DIR / "staticfiles"
 
 #folder name for static asset kat development, dia akan pakai bila debug set as true
 STATIC_URL = '/static/'

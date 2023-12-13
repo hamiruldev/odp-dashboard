@@ -1,0 +1,103 @@
+@media (min-width: 1024px){
+
+    .login {
+        background: var(--darkened-bg);
+        height: auto;
+    }
+
+    #header {
+        background-color: transparent;
+    }
+    #headerMenu {
+        position: relative;
+        z-index: 1000;
+        /* width: 100%; */
+
+        height: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 40px;
+        background: black;
+        color: var(--header-color);
+    }
+
+    form.signup p {
+        display: flex;
+        flex-direction: column;
+    }
+
+    form.signup{
+        overflow-y: scroll;
+        height: 70vh;
+        /* width: 100%; */
+        background: var(--body-bg);
+        border: 1px solid var(--hairline-color);
+        border-radius: 4px;
+        padding: 20px;
+    }
+
+    form.signup p input#id_is_active {
+        width: fit-content;
+    }
+    form.signup p input#id_is_staff {
+        width: fit-content;
+    }
+
+
+    div#content-main\ signup {
+        width: 100%;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    button {
+        background: var(--button-bg);
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        color: var(--button-fg);
+        cursor: pointer;
+        transition: background 0.15s;
+    }
+
+    #headerMenu #branding{
+        width: 100%;
+        text-align: center;
+    }
+
+    ul {
+        padding-left: 4%;
+    }
+
+    /* label[for='id_is_staff']{
+        display: none;
+    }
+
+    label[for='id_user_view']{
+        display: none;
+    }
+    
+    input[id="id_is_staff"]{
+        display: none;
+    }
+
+    input[id="id_user_view"]{
+        display: none;
+    }
+
+    p:nth-child(5){
+        display: none !important;
+    }
+
+    p:nth-child(6){
+        display: none !important;
+    }
+    p:nth-child(9){
+        display: none !important;
+    } */
+
+    
+}
