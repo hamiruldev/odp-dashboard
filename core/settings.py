@@ -11,10 +11,15 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import os
+import environ
 
 import pymysql
 
 pymysql.install_as_MySQLdb()
+
+# Read the .env file
+env = environ.Env()
+environ.Env.read_env()
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 
@@ -32,7 +37,7 @@ BASE_URL_FE_DEV = 'http://localhost:3000/'
 SECRET_KEY = 'mm3a((@)#f%sbqjedxgcwta=^1r%)dsql131es!)l7o7ockmku'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 # ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS = ['onedream.dynamicdigital.guru',
@@ -106,8 +111,24 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+
+# Database settings
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+    }
+}
+
 # DEV - local server - window
-#DATABASES = {
+# DATABASES = {
 #   'default': {
 #       'ENGINE': 'django.db.backends.mysql',
 #       'NAME': '131123',
@@ -119,22 +140,22 @@ WSGI_APPLICATION = 'core.wsgi.application'
 #            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
 #        },
 #   }
-#}
+# }
 
 #DEV - SF server
-DATABASES = {
-      'default': {
-          'ENGINE': 'django.db.backends.mysql',
-          'NAME': 'tripleon_131123',
-          'USER': 'tripleon_131123',
-          'PASSWORD': '123agent123',
-          'HOST': 'localhost',
-          'PORT': '3306',
-          'OPTIONS': {
-              'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-          },
-      }
-}
+# DATABASES = {
+#       'default': {
+#           'ENGINE': 'django.db.backends.mysql',
+#           'NAME': 'tripleon_131123',
+#           'USER': 'tripleon_131123',
+#           'PASSWORD': '123agent123',
+#           'HOST': 'localhost',
+#           'PORT': '3306',
+#           'OPTIONS': {
+#               'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#           },
+#       }
+# }
 
 # PROD DIGITAL OCEAN
 # DATABASES = {
@@ -185,12 +206,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 # Static Root masa kat deployment
-STATIC_ROOT = os.path.join(BASE_DIR, 'globalstaticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'globalstaticfiles')
 
 # staticfiles kat development
-# STATICFILES_DIRS = (
-#   os.path.join(BASE_DIR, 'globalstaticfiles'),
-# )
+STATICFILES_DIRS = (
+  os.path.join(BASE_DIR, 'globalstaticfiles'),
+)
 
 # global staticfiles kat production
 #STATICFILES_DIRS = (
