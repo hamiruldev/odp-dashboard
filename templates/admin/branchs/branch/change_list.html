@@ -1,0 +1,83 @@
+<!-- templates/admin/<app_name>/<model_name>/change_list.html -->
+    {% extends "admin/change_list.html" %}
+
+    {% block extrahead %}
+        {{ block.super }}
+
+        <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
+        <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+
+    {% endblock %}
+    
+    {% block content %}
+
+        <style>
+            .mapboxgl-map{
+                height: 300px;
+            }
+
+            .object-tools {
+                margin-top: 0px;
+            }
+
+            #changelist-form .results{
+                height: 30dvh;
+            }
+
+            .marker{
+                cursor: pointer;
+                width: 30px;
+                height: 30px;
+                background-color: white;
+                background-position: center;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-image: url(/media/icon/oneDream.png);
+                
+                border-radius: 50%;
+                box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 6px 4px;
+                border: 1px solid black;
+            }
+
+        </style>
+
+        <div id="map"></div>
+        {{ block.super }}
+        <script>
+
+            // Add markers for each Branch object
+            var branches = {{ branches_json | safe }};
+            var mapboxglToken = "{{ mapboxglToken }}";
+
+           mapboxgl.accessToken = mapboxglToken;
+
+            const map = new mapboxgl.Map({
+                container: 'map', // container ID
+                style: 'mapbox://styles/mapbox/streets-v12', // style URL
+                center: [branches[0].long , branches[0].lat], // starting position [lng, lat]
+                zoom: 10 // starting zoom
+            });
+
+            map.addControl(new mapboxgl.FullscreenControl());
+
+            branches.forEach(function (branch) {
+
+                var el = document.createElement('div');
+                    el.className = 'marker';
+
+                    // Create a popup for the marker
+                    var popup = new mapboxgl.Popup().setHTML(`<b>${branch.name}</b>`);
+                
+                    // Add the marker to the map
+                    new mapboxgl.Marker(el)
+                        .setLngLat([branch.long, branch.lat])
+                        .setPopup(popup)
+                        .addTo(map);
+            });
+
+
+
+
+        </script>
+    {% endblock %}
+    

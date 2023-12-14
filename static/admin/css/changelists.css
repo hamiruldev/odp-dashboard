@@ -4,6 +4,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+    width: 100%;
 }
 
 #changelist .changelist-form-container {

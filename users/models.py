@@ -74,8 +74,8 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
 
     introducer = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
-    branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True, blank=True)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, default=None, blank=True) 
+    branch = models.ForeignKey(Branch, on_delete=models.SET_NULL, null=True, blank=True)
+    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, default=None, blank=True) 
     
     user_view = models.IntegerField(default=0, null=True, blank=True)
 

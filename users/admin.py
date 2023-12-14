@@ -33,7 +33,7 @@ class UserAdminConfig(UserAdmin, ImportExportModelAdmin):
     resource_class = ReportResource
     model = NewUser
     search_fields = ('email', 'username', 'first_name',)
-    list_filter = ('team', 'branch', 'introducer',)
+    list_filter = ('team', 'branch',)
     ordering = ('-user_profile__view_count',)
     list_display = ('username_link', 'user_profile_link', 'introducer', 'branch', 'team', 'is_active', 'get_group_names')
     autocomplete_fields = ['introducer']

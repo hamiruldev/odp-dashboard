@@ -8,8 +8,11 @@ from .resource import ReportResourceInventory, ReportResourceCategory, ReportRes
 class InventoryAdmin(ImportExportModelAdmin):
     resource_class = ReportResourceInventory
     model = Inventory
+    list_display = ("title", "view_count", "inventory_date", )
     search_fields = ('title', 'username', 'first_name',)
     list_filter = ('branch', )
+    ordering = ('-inventory_date',)
+
 
 class CategoryAdmin(ImportExportModelAdmin):
     resource_class = ReportResourceCategory
