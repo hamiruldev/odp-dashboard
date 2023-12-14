@@ -8,6 +8,7 @@ venv/
 core/settings.py
 myvenv
 .venv
+
 .env
 
-stderr.log
+*.log
