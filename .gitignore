@@ -11,4 +11,4 @@ myvenv
 
 .env
 
-*.log
+stderr.log
