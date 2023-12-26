@@ -11,6 +11,7 @@ import environ
 class BranchAdmin(admin.ModelAdmin):
     list_display = ("name", "location", "is_hq")
     change_list_template = 'admin/branchs/branch/change_list.html'
+    search_fields=('branchs',)
 
     def changelist_view(self, request, extra_context=None):
         response = super().changelist_view(request, extra_context)

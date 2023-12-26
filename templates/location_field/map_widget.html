@@ -1,0 +1,72 @@
+{{field_input}}
+<div class="map-widget" style="margin-top: 4px">
+  <label></label>
+
+  <div id="map_{{field_name}}" style="width: 92vw; height: 250px"></div>
+
+</div>
+
+
+<script>
+
+// leaflet-touch .fullscreen-icon.leaflet-fullscreen-on
+
+  function appendFullscreenButton() {
+    // Create the new DOM element
+    const fullscreenButton = document.createElement('a');
+    fullscreenButton.className = 'leaflet-control-zoom-fullscreen fullscreen-icon';
+    fullscreenButton.href = '#';
+    fullscreenButton.title = 'Full Screen';
+    fullscreenButton.role = 'button';
+    fullscreenButton.setAttribute('aria-label', 'Full Screen');
+    fullscreenButton.addEventListener('click', toggleFullscreen);
+
+    // Get the existing container element
+    const zoomControl = document.querySelector('.leaflet-control-zoom');
+
+    // Append the new element as the last child
+    zoomControl.appendChild(fullscreenButton);
+  }
+
+  setTimeout(() => {
+    appendFullscreenButton();
+
+  }, 1000);
+
+
+
+
+  function toggleFullscreen() {
+    const fullscreenDiv = document.getElementById('map_{{field_name}}');
+    const fullscreenDivIcon = document.querySelector('.leaflet-control-zoom');
+
+    if (!document.fullscreenElement) {
+      if (fullscreenDiv.requestFullscreen) {
+        fullscreenDiv.requestFullscreen();
+      } else if (fullscreenDiv.mozRequestFullScreen) {
+        fullscreenDiv.mozRequestFullScreen();
+      } else if (fullscreenDiv.webkitRequestFullscreen) {
+        fullscreenDiv.webkitRequestFullscreen();
+      } else if (fullscreenDiv.msRequestFullscreen) {
+        fullscreenDiv.msRequestFullscreen();
+      }
+
+      document.querySelector('.leaflet-control-zoom-fullscreen').classList.add('leaflet-fullscreen-on');
+
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+
+      document.querySelector('.leaflet-control-zoom-fullscreen').classList.remove('leaflet-fullscreen-on');
+
+    }
+  }
+
+</script>

@@ -48,7 +48,7 @@ ALLOWED_HOSTS = ['onedream.dynamicdigital.guru',
 
 INSTALLED_APPS = [
     # 'admin_reorder',
-        
+    'location_field.apps.DefaultConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -107,6 +107,34 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+LOCATION_FIELD_PATH = '/static/location_field'
+
+LOCATION_FIELD = {
+    'search.provider': 'google',
+    'map.provider': 'mapbox',
+    
+    'provider.google.api': '//maps.google.com/maps/api/js?sensor=false',
+    'provider.google.api_key': 'AIzaSyCw3wsa90tFvFey2uNhqaA3iIn_eLCFTv8',
+    'provider.google.api_libraries': '',
+    'provider.google.map.type': 'ROADMAP',
+    'provider.google.max_zoom': 18,
+    
+    
+    'provider.mapbox.access_token': 'pk.eyJ1Ijoib25lZHJlYW1wcm9wZXJ0eSIsImEiOiJjbHE0bWhoM2kwN3lsMnFuNmQzYjFxbnI1In0.AVeStt8G9RI8vdfeChun1w',
+    'provider.mapbox.max_zoom': 18,
+    'provider.mapbox.id': 'mapbox.streets',
+    
+    
+    
+    # misc
+    'resources.root_path': LOCATION_FIELD_PATH,
+    'resources.media': {
+        'js': (
+            LOCATION_FIELD_PATH + '/js/form.js',
+        ),
+    },
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -164,13 +192,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-# Static Root masa kat production
-# STATIC_ROOT = os.path.join(BASE_DIR, 'globalstaticfiles')
+# Static Root masa kat production, masa run collectstatic ni kena on
+STATIC_ROOT = os.path.join(BASE_DIR, 'globalstaticfiles')
 
-# staticfiles kat development
-STATICFILES_DIRS = (
-  os.path.join(BASE_DIR, 'globalstaticfiles'),
-)
+# staticfiles kat development, masa run collectstatic ni kena off
+# STATICFILES_DIRS = (
+#   os.path.join(BASE_DIR, 'globalstaticfiles'),
+# )
 
 # global staticfiles kat production
 #STATICFILES_DIRS = (

@@ -28,15 +28,16 @@
                 cursor: pointer;
                 width: 30px;
                 height: 30px;
-                background-color: white;
+         
+
                 background-position: center;
                 background-size: contain;
                 background-repeat: no-repeat;
-                background-image: url(/media/icon/oneDream.png);
+                background-image: url(/media/icon/marker-icon-2x-1.png);
                 
                 border-radius: 50%;
-                box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 6px 4px;
-                border: 1px solid black;
+
+                filter: drop-shadow(5px 5px 5px #222); 
             }
 
         </style>
@@ -53,7 +54,7 @@
 
             const map = new mapboxgl.Map({
                 container: 'map', // container ID
-                style: 'mapbox://styles/mapbox/streets-v12', // style URL
+                style: 'mapbox://styles/mapbox/satellite-streets-v12', // style URL
                 center: [branches[0].long , branches[0].lat], // starting position [lng, lat]
                 zoom: 10 // starting zoom
             });

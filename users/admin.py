@@ -98,6 +98,7 @@ class UserAdminConfig(UserAdmin, ImportExportModelAdmin):
         return format_html('<a href="{}">{}</a>', url, obj.username)
 
     def user_profile_link(self, obj):
+        # print("obj---->", obj)
         profile_url = "https://onedreamproperty.com.my/{}".format(
             obj.username)
         return format_html('<a href="{}" target="_blank">{}</a>', profile_url, obj.username)

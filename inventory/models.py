@@ -5,6 +5,9 @@ from django.utils.translation import gettext_lazy as _
 from profiles.models import Profile
 from branchs.models import Branch
 
+from location_field.models.plain import PlainLocationField
+
+
 def get_upload_path(instance, filename):
     if instance:
         return f'inventory/user_{instance.realtor.user.username}/gallery/{filename}'
@@ -41,6 +44,9 @@ class Inventory(models.Model):
         PARTIAL_FURNISH = 'Partial'
         NONE = 'None'
 
+    address = models.CharField(max_length=150)
+    location = PlainLocationField(based_fields=['address'], zoom=18, null=True, blank=True)
+    
     category = models.ForeignKey(Category, on_delete=models.PROTECT, default=1, related_name="category")
     propertyType = models.ForeignKey(PropertyType, on_delete=models.PROTECT, default=1)
     propertyTitle = models.CharField(max_length=50, choices=TitleType.choices, default=TitleType.STRATA)
@@ -50,9 +56,12 @@ class Inventory(models.Model):
 
     slug = models.CharField(max_length=200, unique=True)
     title = models.CharField(max_length=150)
-    address = models.CharField(max_length=150)
-    location = models.CharField(max_length=100, null=True)
     city = models.CharField(max_length=100)
+    
+    
+    # location = models.CharField(max_length=100, null=True)
+  
+    
     state = models.CharField(max_length=100, null=True, blank=True)
     zipcode = models.CharField(max_length=15)
     description = models.TextField(blank=True)
