@@ -9,7 +9,9 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 from profiles.models import Profile
 from users.models import NewUser
-from .serializers import UserProfileSerializer
+from branchs.models import Branch
+
+from .serializers import UserProfileSerializer, IntroducerSerializer
 from .permissions import ProfileUserWritePermission
 
 # own user view and create
@@ -44,3 +46,17 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
             profile.update_views()
 
         return get_object_or_404(Profile, user__username=username)
+
+class IntroducerDetail(generics.RetrieveUpdateAPIView):
+    serializer_class = IntroducerSerializer
+
+    def get_object(self, queryset=None, **kwargs):
+        username = self.kwargs.get('username')
+        user = get_object_or_404(NewUser, username=username)
+        profile = get_object_or_404(Profile, user=user.id)        
+                
+        user.photo = profile.photo
+        user.description = profile.description
+        
+        
+        return user

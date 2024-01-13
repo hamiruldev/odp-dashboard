@@ -33,7 +33,8 @@ from django.contrib.auth.forms import UserCreationForm
 from users.admin import CustomUserCreationForm  # Import your custom form
 
 
-class CustomUserRegistration(APIView):
+class CustomUserRegistration(generics.RetrieveUpdateAPIView):
+    serializer_class = CustomUserSerializer
     permission_classes = [AllowAny]
 
     def post(self, request, format='json'):
@@ -42,10 +43,12 @@ class CustomUserRegistration(APIView):
             user = serializer.save()
             profile = Profile()
             profile.user = user
-            profile.firstName = user.first_name
+            profile.first_name = user.first_name
+            profile.last_name = user.last_name
             profile.email = user.email
+            profile.phone_no = user.phone_no
             profile.introducer = user.introducer
-            # profile.groupId = Profile().get_group_id()
+            # profile.team = Profile().get_team_id()
             profile.save()
             if user:
                 json = serializer.data

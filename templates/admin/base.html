@@ -3,14 +3,31 @@
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}">
 <head>
 <title>{% block title %}{% endblock %}</title>
+
 <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "css/admin/base.css" %}{% endblock %}">
+
+<!-- Add Syncfusion CDN -->
+<script src="https://cdn.syncfusion.com/ej2/18.2.44/dist/ej2.min.js"></script>
+
+<!-- Add Chart.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+
+<!-- Add Axios.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<link href="https://cdn.syncfusion.com/ej2/ej2-base/styles/material.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.syncfusion.com/ej2/ej2-layouts/styles/material.css" rel="stylesheet" type="text/css"/>
+
+<script src="https://cdn.syncfusion.com/ej2/syncfusion-helper.js" type ="text/javascript"></script>
+
 {% if not is_popup and is_nav_sidebar_enabled %}
   <link rel="stylesheet" type="text/css" href="{% static "admin/css/nav_sidebar.css" %}">
   <script src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>
-  <!-- <script src="{% static 'js/admin/test.js' %}" defer></script> -->
 
-  
+
 {% endif %}
+
+
 {% block extrastyle %}{% endblock %}
 {% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">{% endif %}
 {% block extrahead %}{% endblock %}
@@ -62,8 +79,10 @@
         {% endblock %}
         {% block nav-global %}{% endblock %}
     </div>
+    
     {% endblock %}
     <!-- END Header -->
+
     {% block breadcrumbs %}
     <div class="breadcrumbs">
     <a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
@@ -73,12 +92,128 @@
     {% endif %}
 
     <div class="main" id="main">
+
       {% if not is_popup and is_nav_sidebar_enabled %}
         {% block nav-sidebar %}
           {% include "admin/nav_sidebar.html" %}
         {% endblock %}
       {% endif %}
       <div class="content">
+       
+
+        {% if title == 'Dashboard' %}
+
+        <!-- {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %} -->
+
+
+          <div class="cardContainerChart">
+
+            <div tabindex="0" class="e-card" id="basic">
+
+              <div class="e-card-header">
+                  <div class="e-card-header-caption">
+                      <div class="e-card-header-title container_TMO"></div>
+                  </div>
+              </div>
+
+              <div class="eCard-content-box">
+
+              <div class="e-card-content">
+                <div class="box" >
+                  <h2>
+                    Branch :
+                  </h2>
+                  <h1 class="branchText">
+                    0
+                  </h1>
+                </div>
+
+                <div id="BranchProgressBar" class="linear-progress"></div>
+
+              </div>
+
+              <div class="e-card-content">
+                <div class="box" >
+
+                  <h2>
+                    Agent :
+                  </h2>
+                  <h1 class="agentText">
+                    0
+                  </h1>
+
+                </div>
+
+                <div id="AgentProgressBar" class="linear-progress"></div>
+               
+              </div>
+
+              <div class="e-card-content">
+                <div class="box" >
+
+                  <h2>
+                    Customer :
+                  </h2>
+                  <h1 class="customerText">
+                    0
+                  </h1>
+
+                </div>
+
+                <div id="CustomerProgressBar" class="linear-progress"></div>
+
+              </div>
+
+              <div class="e-card-content">
+                <div class="box" >
+
+                  <h2>
+                    Listing Unit :
+                  </h2>
+                  <h1 class="InventoryText">
+                    0
+                  </h1>
+
+                </div>
+
+                <div id="ListingProgressBar" class="linear-progress"></div>
+            
+              </div>
+            </div>
+
+
+
+          </div>
+
+              <div tabindex="1" class="e-card" id="basic">
+
+                  <div class="e-card-header">
+                      <div class="e-card-header-caption">
+                          <div class="e-card-header-title">Total Sale Summary</div>
+                      </div>
+                  </div>
+
+                  <div class="e-card-content">
+                    <div id="myChart"></div>
+                  </div>
+              </div>
+              
+              <div tabindex="2" class="e-card" id="basic">
+
+                <div class="e-card-header">
+                    <div class="e-card-header-caption">
+                        <div class="e-card-header-title">Sale Category Summary</div>
+                    </div>
+                </div>
+
+                <div class="e-card-content">
+                  <div id="myPieChart"></div>
+                </div>
+            </div>
+    
+          </div>
+      {% endif %}
+
         {% block messages %}
           {% if messages %}
             <ul class="messagelist">{% for message in messages %}
@@ -86,11 +221,11 @@
             {% endfor %}</ul>
           {% endif %}
         {% endblock messages %}
-        <!-- Content -->
-        <!-- <button  onclick="TriggerMyAlert()">test</button> -->
+
         <div id="content" class="{% block coltype %}colM{% endblock %}">
           {% block pretitle %}{% endblock %}
-          {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+
+          
           {% block content_subtitle %}{% if subtitle %}<h2>{{ subtitle }}</h2>{% endif %}{% endblock %}
           {% block content %}
             {% block object-tools %}{% endblock %}
@@ -105,5 +240,28 @@
     </div>
 </div>
 <!-- END Container -->
+
+
+<script src="{% static 'admin/js/api.js' %}" defer></script>
+<script src="{% static 'admin/js/helper.js' %}" defer></script>
+<script src="{% static 'admin/js/component.js' %}" defer></script>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+    
+      reorderModule();
+
+      const { currentDay, currentYear } = getDate();
+
+      if (document.querySelector(".container_TMO"))
+        document.querySelector(
+          ".container_TMO"
+        ).textContent = `Overview - ${currentDay}/${currentYear}`;
+
+        });
+
+</script>
+
 </body>
 </html>

@@ -26,7 +26,7 @@ class InventorySerializer(serializers.ModelSerializer):
         fields = ('category', 'id', 'propertyType', 'propertyTitle', 'saleType',
                   'rentalDeposit', 'tenure',
                   'slug', 'title', 'location', 'address', 'city', 'state', 'zipcode',
-                  'description', 'lat', 'lon',
+                  'description', 'lat', 'long',
                   'price', 'bedrooms', 'bathrooms', 'floorRange', 'furnishing', 'amenities',
                   'size', 'carpark', 'otherInfo',
                   'featureImage', 'photo_1', 'photo_2', 'photo_3', 'photo_4', 'photo_5',

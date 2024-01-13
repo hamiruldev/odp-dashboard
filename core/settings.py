@@ -26,8 +26,9 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-BASE_URL_FE = 'https://onedreamproperty.com.my/'
-BASE_URL_FE_DEV = 'http://localhost:3000/'
+# Simplified BASE_URL_FE and BASE_URL_BE based on DEBUG value
+BASE_URL_FE = 'http://localhost:3000/' if env('DEBUG') else 'https://onedreamproperty.com.my'
+BASE_URL_BE = 'http://127.0.0.1:8000/' if env('DEBUG') else 'https://onedream.dynamicdigital.guru'
 
 
 # Quick-start development settings - unsuitable for production
@@ -193,12 +194,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 # Static Root masa kat production, masa run collectstatic ni kena on
-STATIC_ROOT = os.path.join(BASE_DIR, 'globalstaticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'globalstaticfiles')
 
 # staticfiles kat development, masa run collectstatic ni kena off
-# STATICFILES_DIRS = (
-#   os.path.join(BASE_DIR, 'globalstaticfiles'),
-# )
+STATICFILES_DIRS = (
+  os.path.join(BASE_DIR, 'globalstaticfiles'),
+)
 
 # global staticfiles kat production
 #STATICFILES_DIRS = (

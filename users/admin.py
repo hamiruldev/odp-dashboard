@@ -21,21 +21,21 @@ from .resource import ReportResource
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = NewUser
-        fields = ('email', 'username', 'first_name', 'introducer', 'branch', 'team')
+        fields = ('email', 'username', 'first_name', 'full_name', 'introducer', 'branch', 'team')
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = NewUser
-        fields = ('email', 'username', 'first_name', 'is_active', 'is_staff', 'user_view', 'introducer', 'branch', 'team')
+        fields = ('email', 'username', 'first_name', 'full_name', 'is_active', 'is_staff', 'user_view', 'introducer', 'branch', 'team')
 
 
 class UserAdminConfig(UserAdmin, ImportExportModelAdmin):
     resource_class = ReportResource
     model = NewUser
-    search_fields = ('email', 'username', 'first_name',)
-    list_filter = ('team', 'branch',)
+    search_fields = ('email', 'username', 'first_name', 'full_name',)
+    list_filter = ('team', 'branch')
     ordering = ('-user_profile__view_count',)
-    list_display = ('username_link', 'user_profile_link', 'introducer', 'branch', 'team', 'is_active', 'get_group_names')
+    list_display = ('username_link', 'user_profile_link', 'introducer', 'branch', 'team', 'is_active', 'get_group_names','listing_admin',)
     autocomplete_fields = ['introducer']
 
     
@@ -56,8 +56,8 @@ class UserAdminConfig(UserAdmin, ImportExportModelAdmin):
                         'groups'),
             },
          ),
-        (("Personal info"), {"fields": ("first_name", "last_name", 'is_active', 'is_staff')}),
-        (("Referal"), {"fields": ("introducer", "team", "branch")}),
+        (("Personal info"), {"fields": ( 'full_name', ( "first_name", "last_name") , ('ic_type', 'ic_no'), 'birth_date', 'date_joined', ('is_staff', 'is_active'),)}),
+        (("Referal"), {"fields": (("introducer" , "agent_commision_precent"), "team", "branch",)}),
     )
 
     fieldsets = (
@@ -70,15 +70,16 @@ class UserAdminConfig(UserAdmin, ImportExportModelAdmin):
         }),
         (("Personal info"), {
             'fields': (
-                "first_name",
-                "last_name",
-                'is_active',
-                'is_staff',
+                'full_name',
+                ('first_name', 'last_name'),
+                ('ic_type', 'ic_no' ),
+                'birth_date',
+                ('is_agent', 'is_active','is_staff')
             ),
         }),
         (("Referral"), {
             'fields': (
-                "introducer",
+                ("introducer", "agent_commision_precent"),
                 "team",
                 "branch",
             ),
@@ -98,7 +99,6 @@ class UserAdminConfig(UserAdmin, ImportExportModelAdmin):
         return format_html('<a href="{}">{}</a>', url, obj.username)
 
     def user_profile_link(self, obj):
-        # print("obj---->", obj)
         profile_url = "https://onedreamproperty.com.my/{}".format(
             obj.username)
         return format_html('<a href="{}" target="_blank">{}</a>', profile_url, obj.username)

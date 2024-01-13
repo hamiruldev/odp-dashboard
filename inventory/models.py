@@ -45,7 +45,16 @@ class Inventory(models.Model):
         NONE = 'None'
 
     address = models.CharField(max_length=150)
-    location = PlainLocationField(based_fields=['address'], zoom=18, null=True, blank=True)
+    
+    lat = models.DecimalField(_("Latitude"), max_digits=50, decimal_places=20, null=True, default=1.515518 ,blank=True )
+    long = models.DecimalField(_("Longitude"), max_digits=50, decimal_places=20, null=True, default=103.72535 ,blank=True )
+    
+    location = models.CharField(max_length=100, null=True)
+    
+    
+    location_lat_long = PlainLocationField(based_fields=['address'], zoom=18, null=True, blank=True)
+    
+    
     
     category = models.ForeignKey(Category, on_delete=models.PROTECT, default=1, related_name="category")
     propertyType = models.ForeignKey(PropertyType, on_delete=models.PROTECT, default=1)
@@ -59,14 +68,14 @@ class Inventory(models.Model):
     city = models.CharField(max_length=100)
     
     
-    # location = models.CharField(max_length=100, null=True)
   
     
     state = models.CharField(max_length=100, null=True, blank=True)
-    zipcode = models.CharField(max_length=15)
+    zipcode = models.CharField(max_length=15, null=True, blank=True)
+
+    
     description = models.TextField(blank=True)
-    lat = models.DecimalField(_("Latitude"), max_digits=9, decimal_places=6, null=True)
-    lon = models.DecimalField(_("Longitude"), max_digits=9, decimal_places=6, null=True)
+    
     
     price = models.IntegerField()
     bedrooms = models.IntegerField()
@@ -75,7 +84,7 @@ class Inventory(models.Model):
     size = models.IntegerField(null=True, blank=True)
     furnishing = models.CharField(max_length=50,choices=Furnishing.choices, default=Furnishing.NONE)
     amenities = models.CharField(max_length=200, null=True)
-    carpark = models.IntegerField()
+    carpark = models.IntegerField(null=True, blank=True)
     otherInfo = models.CharField(max_length=255, null=True)
 
     featureImage = models.ImageField(_("Featured Image"), upload_to=get_upload_path, blank=True, null=True)
@@ -89,14 +98,14 @@ class Inventory(models.Model):
     photo_8 = models.ImageField(upload_to=get_upload_path, blank=True, null=True)
     photo_9 = models.ImageField(upload_to=get_upload_path, blank=True, null=True)
     photo_10 = models.ImageField(upload_to=get_upload_path, blank=True, null=True)
-    video = models.URLField(max_length=200, null=True)
+    video = models.URLField(max_length=200, null=True, blank=True)
 
     is_published = models.BooleanField(default=True)
     status = models.BooleanField(default=True)
     inventory_date = models.DateTimeField(default=timezone.now)
 
     realtor = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='inventories')
-    branch = models.ForeignKey(Branch, on_delete=models.CASCADE, default=1)
+    branch = models.ForeignKey(Branch, on_delete=models.SET_NULL, null=True, default=1)
     
 
     view_count = models.IntegerField(default=0)

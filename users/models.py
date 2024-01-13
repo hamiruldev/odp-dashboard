@@ -6,6 +6,7 @@ from branchs.models import Branch
 from teams.models import Team
 from django.urls import reverse
 
+
 def get_upload_path(instance, filename):
     if instance:
         return f'logoUrl/user_{instance.name}/{filename}'
@@ -42,6 +43,20 @@ class CustomAccountManager(BaseUserManager):
 
 
 class NewUser(AbstractBaseUser, PermissionsMixin):
+    
+    
+    # OPTION1 = 'IDD TYPE'
+    OPTION2 = 'newic'
+    OPTION3 = 'passportforeign'
+    OPTION4 = 'armypolice'
+
+
+    MY_FIELD_CHOICES = [
+        # (OPTION1, 'ID TYPE'),
+        (OPTION2, 'NEW IC'),
+        (OPTION3, 'PASSPORT / FOREIGN ID'),
+        (OPTION4, 'ARMY / POLICE ID'),
+    ]
 
     email = models.EmailField(_('email address'), unique=True)
     
@@ -63,6 +78,8 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
 
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(_("last name"), max_length=150, blank=True)
+    full_name = models.CharField(_("full name (As Per IC)"), max_length=150, blank=True)
+    phone_no = models.CharField(max_length=20, blank=True, null=True)
     
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
     
@@ -72,12 +89,27 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
     
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    is_agent = models.BooleanField(default=True)
 
-    introducer = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
-    branch = models.ForeignKey(Branch, on_delete=models.SET_NULL, null=True, blank=True)
-    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, default=None, blank=True) 
+    introducer = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=False)
+    branch = models.ForeignKey(Branch, on_delete=models.SET_NULL, null=True, blank=False, default=0)
+    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=False, default=0)
     
+    ic_type = models.CharField(
+        max_length=30,
+        choices=MY_FIELD_CHOICES,
+        default=OPTION2  # You can set a default value if needed
+    )
+    
+    ic_no = models.CharField(max_length=150, blank=False)
+
+    birth_date = models.DateField(default=timezone.now,  null=True, blank=True)
+    
+    agent_commision_precent = models.IntegerField(null=True,blank=True, default=0, verbose_name="Precent %")
+
     user_view = models.IntegerField(default=0, null=True, blank=True)
+    
+    listing_admin = models.BooleanField(default=True)
 
     objects = CustomAccountManager()
 

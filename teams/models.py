@@ -13,8 +13,8 @@ class Team(models.Model):
     
     empires = models.PositiveIntegerField(default=0, null=True, blank=True)
     about = models.TextField(null=True, blank=True)
-
-
+    team_commision_precent = models.IntegerField(null=True,blank=True, default=0, verbose_name="Precent %")
+    
     def __str__(self):
         return self.name
 

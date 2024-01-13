@@ -9,7 +9,7 @@ class CustomAdminSite(admin.AdminSite):
     index_title = 'Dashboard'
     
     
-    
+    app_list_template = 'admin/app_list.html'
 
     
     def get_app_list(self, request):

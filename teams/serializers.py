@@ -5,5 +5,5 @@ from .models import Team
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
-        fields = ('name', 'founder', 'empires', 'about')
+        fields = ('name', 'founder', 'empires', 'about', 'team_commision_precent')
 

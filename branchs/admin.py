@@ -9,7 +9,7 @@ from django.http import JsonResponse
 from django.template.response import TemplateResponse
 import environ
 class BranchAdmin(admin.ModelAdmin):
-    list_display = ("name", "location", "is_hq")
+    list_display = ("name", "location", "is_hq", 'branch_commision_precent')
     change_list_template = 'admin/branchs/branch/change_list.html'
     search_fields=('branchs',)
 

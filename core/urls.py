@@ -33,7 +33,7 @@ urlpatterns = [
 
         path('user/', include('users.urls')),
         path('profile/', include('profiles.urls')),
-        path('blog/', include('blog_api.urls')),
+        # path('blog/', include('blog_api.urls')),
         path('branch/', include('branchs.urls')),
         path('inventory/', include('inventory_api.urls')),
 

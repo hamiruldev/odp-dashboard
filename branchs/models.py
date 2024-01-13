@@ -19,6 +19,8 @@ class Branch(models.Model):
 
     is_hq = models.BooleanField(default=False)
     description = models.TextField(default='', null=True, blank=True)
+    
+    branch_commision_precent = models.IntegerField(null=True,blank=True, default=0, verbose_name="Precent %")
 
     def save(self, *args, **kwargs):
         g = geocoder.mapbox(self.location, key=env('SECRET_KEY_MAP_BOX'))
