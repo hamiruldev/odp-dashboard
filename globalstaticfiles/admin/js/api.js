@@ -24,7 +24,7 @@ async function fetchDataAsync(apiUrl, site) {
       const { data } = results;
 
 
-      console.log("data---->" , data)
+      // console.log("data---->" , data)
 
       document.querySelector(".branchText").textContent = data.count;
 
@@ -61,13 +61,13 @@ async function fetchDataAsync(apiUrl, site) {
       const { data } = results;
       document.querySelector(".InventoryText").textContent = data.count;
 
-      document.querySelector(
-        "#ListingProgressBar"
-      ).ej2_instances[0].labelStyle.text == `${
-        data.count / 100
-      }% Complete (Success)`;
+      // document.querySelector(
+      //   "#ListingProgressBar"
+      // ).ej2_instances[0].labelStyle.text == `${
+      //   data.count / 100
+      // }% Complete (Success)`;
       
-      document.querySelector("#ListingProgressBar").ej2_instances[0].value = 70;
+      // document.querySelector("#ListingProgressBar").ej2_instances[0].value = 70;
       // document.querySelector("#ListingProgressBar").ej2_instances[0].refesh();
     }
 
