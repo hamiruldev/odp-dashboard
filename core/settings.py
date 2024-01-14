@@ -193,18 +193,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-# Static Root masa kat production, masa run collectstatic ni kena on
-# STATIC_ROOT = os.path.join(BASE_DIR, 'globalstaticfiles')
+# Static Root masa kat production, masa run collectstatic ni kena on  . dia akan copy media ke folder static
+STATIC_ROOT = os.path.join(BASE_DIR, 'globalstaticfiles')
 
 # staticfiles kat development, masa run collectstatic ni kena off
-STATICFILES_DIRS = (
-  os.path.join(BASE_DIR, 'globalstaticfiles'),
-)
-
-# global staticfiles kat production
 #STATICFILES_DIRS = (
 #  os.path.join(BASE_DIR, 'globalstaticfiles'),
 #)
+
+# global staticfiles kat production . dia akan amik media '' ke static_root
+STATICFILES_DIRS = (
+  os.path.join(BASE_DIR, 'static'),
+)
 
 # Absolute filesystem path to the directory that will hold static files at production, can test when debug is False
 #STATIC_ROOT = BASE_DIR / "staticfiles"

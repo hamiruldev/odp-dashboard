@@ -92,8 +92,8 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
     is_agent = models.BooleanField(default=True)
 
     introducer = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=False, default=1)
-    branch = models.ForeignKey(Branch, on_delete=models.SET_NULL, null=True, blank=False, default=0)
-    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=False, default=0)
+    branch = models.ForeignKey(Branch, on_delete=models.SET_NULL, null=True, blank=False, default=1)
+    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=False, default=1)
     
     ic_type = models.CharField(
         max_length=30,
