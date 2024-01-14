@@ -197,14 +197,14 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'globalstaticfiles')
 
 # staticfiles kat development, masa run collectstatic ni kena off
-#STATICFILES_DIRS = (
-#  os.path.join(BASE_DIR, 'globalstaticfiles'),
-#)
+STATICFILES_DIRS = (
+ os.path.join(BASE_DIR, 'static'),
+)
 
 # global staticfiles kat production . dia akan amik media '' ke static_root
-STATICFILES_DIRS = (
-  os.path.join(BASE_DIR, 'static'),
-)
+# STATICFILES_DIRS = (
+#   os.path.join(BASE_DIR, 'static'),
+# )
 
 # Absolute filesystem path to the directory that will hold static files at production, can test when debug is False
 #STATIC_ROOT = BASE_DIR / "staticfiles"

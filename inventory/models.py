@@ -83,7 +83,7 @@ class Inventory(models.Model):
     floorRange = models.IntegerField(null=True, blank=True)
     size = models.IntegerField(null=True, blank=True)
     furnishing = models.CharField(max_length=50,choices=Furnishing.choices, default=Furnishing.NONE)
-    amenities = models.CharField(max_length=200, null=True)
+    amenities = models.CharField(max_length=200, null=True, blank=True)
     carpark = models.IntegerField(null=True, blank=True)
     otherInfo = models.CharField(max_length=255, null=True)
 
