@@ -89,6 +89,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    
+    'django.middleware.cache.UpdateCacheMiddleware',
+    
+    'django.middleware.cache.FetchFromCacheMiddleware',
+    
     # 'admin_reorder.middleware.ModelAdminReorder',
 ]
 
@@ -109,6 +114,13 @@ TEMPLATES = [
         },
     },
 ]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',  # Adjust this based on your Memcached server configuration
+    }
+}
 
 WSGI_APPLICATION = 'core.wsgi.application'
 

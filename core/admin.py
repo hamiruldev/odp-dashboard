@@ -19,8 +19,6 @@ class CustomAdminSite(admin.AdminSite):
         
         
 
-        # print("permission", permission)
-        print("super().get_app_list(request)", super().get_app_list(request))
         # Define the custom order of app labels
         custom_order = ['blog', 'branchs', 'inventory', 'profiles', 'teams', 'users']
 

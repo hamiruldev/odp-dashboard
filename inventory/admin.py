@@ -6,6 +6,8 @@ from import_export.admin import ImportExportModelAdmin
 from .resource import ReportResourceInventory, ReportResourceCategory, ReportResourcePropertyType
 import environ
 from django.template.response import TemplateResponse
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
 
 class InventoryAdmin(ImportExportModelAdmin):
@@ -18,6 +20,8 @@ class InventoryAdmin(ImportExportModelAdmin):
     list_filter = ('category','branch', )
     ordering = ('-inventory_date',)
     
+
+    @method_decorator(cache_page(60 * 15))  # Cache for 15 minutes
     def changelist_view(self, request, extra_context=None):
         response = super().changelist_view(request, extra_context)
         queryset = self.get_queryset(request)
