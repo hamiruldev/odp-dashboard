@@ -32,6 +32,15 @@
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
 
+<!-- Include Mapbox Marker Clustering library -->
+<script src="https://unpkg.com/mapbox-gl@2.14.1/dist/mapbox-gl.js"></script>
+<script src="https://unpkg.com/supercluster@7.1.0/dist/supercluster.min.js"></script>
+
+<link href="
+https://cdn.jsdelivr.net/npm/@icon/maki-icons@6.2.0-alpha.1/maki-icons.min.css
+" rel="stylesheet">
+
+
 {{ media.js }}
 {% endblock %}
 
@@ -56,14 +65,14 @@
     height: 300px;
   }
 
-  .mapboxgl-popup-content{
+  .mapboxgl-popup-content {
     display: flex;
     flex-direction: column;
     width: 126px;
 
   }
 
-  .mapboxgl-popup-content img{
+  .mapboxgl-popup-content img {
     object-fit: cover;
     height: auto;
   }
@@ -76,16 +85,16 @@
     height: 30dvh;
   }
 
+  #unclustered-point {
+    cursor: pointer;
+  }
+
   .marker {
     cursor: pointer;
     width: 30px;
     height: 30px;
 
 
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-image: url(/media/icon/marker-icon-2x-1.png);
 
     border-radius: 50%;
 
@@ -102,6 +111,19 @@
     justify-content: center;
     background: red;
     color: white;
+  }
+
+  .cluster-marker {
+    width: 40px;
+    height: 40px;
+    background-color: #1a73e8;
+    /* Adjust the background color as needed */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
   }
 </style>
 
@@ -163,37 +185,197 @@
   var inventorys = {{ inventorys_json | safe }};
   var mapboxglToken = "{{ mapboxglToken }}";
 
+  // Filter out objects with empty values for lat and long
+  const filteredInventorys = inventorys.filter(item => item.lat !== "" && item.long !== "");
+
+  // // Add features to the supercluster
+  const arrayObject = () => filteredInventorys.map((inventory) =>
+
+  (
+    {
+      type: "Feature",
+      properties: {
+        id: inventory.id,
+        mag: inventory.title,
+        time: 1507425650893,
+        felt: null,
+        tsunami: 0,
+      },
+      geometry: { type: "Point", coordinates: [inventory.long, inventory.lat] },
+    })
+
+  );
+
+  var dataJSONGEO = {
+    type: 'FeatureCollection',
+    crs: { type: "name", properties: { name: "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+    features: arrayObject()
+  }
+
   mapboxgl.accessToken = mapboxglToken;
 
   const map = new mapboxgl.Map({
     container: 'map_inventory', // container ID
     style: 'mapbox://styles/mapbox/satellite-streets-v12', // style URL
-    center: [inventorys[0].long, inventorys[0].lat], // starting position [lng, lat]
-    zoom: 10 // starting zoom
+    center: [101.9758, 4.2105],
+    zoom: 3 // starting zoom
   });
 
   map.addControl(new mapboxgl.FullscreenControl());
 
-  inventorys.forEach(function (inventory) {
+  map.on('load', () => {
 
-    var el = document.createElement('div');
-    el.className = 'marker';
 
-    // Create a popup for the marker
-    var popup = new mapboxgl.Popup().setHTML(`
-    <img src='${inventory.feature_image}' />'
-    <a href='${inventory.id}/change/'>${inventory.title}</a>
-    `);
+    map.loadImage(
+      '/media/icon/marker-icon-2x-1.png',
+      function (error, image) {
+        if (error) throw error;
+        map.addImage('myImage', image);
+      }
+    );
 
-    // Add the marker to the map
-    new mapboxgl.Marker(el)
-      .setLngLat([inventory.long, inventory.lat])
-      .setPopup(popup)
-      .addTo(map);
+    // Add a new source from our GeoJSON data and
+    // set the 'cluster' option to true. GL-JS will
+    // add the point_count property to your source data.
+    map.addSource('earthquakes', {
+      type: 'geojson',
+      // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
+      // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
+      data: dataJSONGEO,
+      cluster: true,
+      clusterMaxZoom: 14, // Max zoom to cluster points on
+      clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+    });
+
+    map.addLayer({
+      id: 'clusters',
+      type: 'circle',
+      source: 'earthquakes',
+      filter: ['has', 'point_count'],
+      paint: {
+        // Use step expressions (https://docs.mapbox.com/style-spec/reference/expressions/#step)
+        // with three steps to implement three types of circles:
+        //   * Blue, 20px circles when point count is less than 100
+        //   * Yellow, 30px circles when point count is between 100 and 750
+        //   * Pink, 40px circles when point count is greater than or equal to 750
+        'circle-color': [
+          'step',
+          ['get', 'point_count'],
+          '#f5dd5d',
+          100,
+          '#f1f075',
+          750,
+          '#f28cb1'
+        ],
+        'circle-radius': [
+          'step',
+          ['get', 'point_count'],
+          20,
+          100,
+          30,
+          750,
+          40
+        ]
+      }
+    });
+
+    map.addLayer({
+      id: 'cluster-count',
+      type: 'symbol',
+      source: 'earthquakes',
+      filter: ['has', 'point_count'],
+      layout: {
+        'text-field': ['get', 'point_count_abbreviated'],
+        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+        'text-size': 12
+      }
+    })
+
+    map.addLayer({
+      id: 'unclustered-point',
+      type: 'symbol',
+      source: 'earthquakes',
+      filter: ['!', ['has', 'point_count']],
+      layout: {
+        "icon-image": "myImage", // THIS SHOULD BE YOUR CUSTOM MARKER
+        "icon-size": 0.25 // ZOOMED FOR DEMO
+      },
+      // paint: {
+      //   'circle-color': '#11b4da',
+      //   'circle-radius': 4,
+      //   'circle-stroke-width': 1,
+      //   'circle-stroke-color': '#fff'
+      // }
+    });
+
+    // inspect a cluster on click
+    map.on('click', 'clusters', (e) => {
+
+      const features = map.queryRenderedFeatures(e.point, {
+        layers: ['clusters']
+      });
+      const clusterId = features[0].properties.cluster_id;
+      map.getSource('earthquakes').getClusterExpansionZoom(
+        clusterId,
+        (err, zoom) => {
+          if (err) return;
+
+          map.easeTo({
+            center: features[0].geometry.coordinates,
+            zoom: zoom
+          });
+        }
+      );
+
+    });
+
+    // When a click event occurs on a feature in
+    // the unclustered-point layer, open a popup at
+    // the location of the feature, with
+    // description HTML from its properties.
+    map.on('click', 'unclustered-point', async (e) => {
+      const coordinates = e.features[0].geometry.coordinates.slice();
+      const mag = e.features[0].properties.mag;
+      const id = e.features[0].properties.id;
+
+      // Ensure that if the map is zoomed out such that
+      // multiple copies of the feature are visible, the
+      // popup appears over the copy being pointed to.
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
+
+      const inventory = filteredInventorys.find(item => item.id === id);
+      const el = document.createElement('div');
+
+      el.className = 'marker';
+
+      new mapboxgl.Marker(el).setLngLat(coordinates)
+        .setPopup(new mapboxgl.Popup().setHTML(`
+        <img id="imageFeature" src="" onerror="this.src='/media/no_image/no_image.jpeg';" />
+        <a style="text-decoration: underline;" href='${id}/change/'>${mag}</a>`))
+        .addTo(map);
+
+
+      await axios.get(`${window.location.origin}/api/v1/inventory/${id}`).then((res) => {
+        document.querySelector("#imageFeature").src = res.data.featureImage
+      })
+
+    });
+
+    map.on('moveend', 'unclustered-point', (e) => {
+      // console.log("open marker")
+    })
+
+    map.on('mouseenter', 'clusters', () => {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+
+    map.on('mouseleave', 'clusters', () => {
+      map.getCanvas().style.cursor = '';
+      // console.log("close marker")
+    });
   });
-
-
-
 
 </script>
 

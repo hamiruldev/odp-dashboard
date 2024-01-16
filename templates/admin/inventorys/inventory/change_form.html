@@ -83,7 +83,7 @@
 
 
 <style>
-  .form-row.field-location_lat_long input#id_location_lat_long {
+  /* .form-row.field-location_lat_long input#id_location_lat_long {
     display: none;
   }
 
@@ -97,22 +97,31 @@
 
   .form-row.field-long{
     display: none;
-  }
+  } */
 
 </style>
 <script>
+
+  addEventListener("DOMContentLoaded", (event) => { 
+
+
+    document.querySelector("#id_address").addEventListener("input", function (e) {
+
+
+
+    const latLong = document.querySelector("#id_location_lat_long").value
+
+    // Split the string into an array using the comma as the delimiter
+    const coordinatesArray = latLong.split(',');
+
+    document.querySelector("#id_lat").value =  parseFloat(coordinatesArray[0]);
+    document.querySelector("#id_long").value =  parseFloat(coordinatesArray[1]);
+
+    })
+
+  });
   
-  document.querySelector("#id_address").addEventListener("change", function (e) {
-
-  const latLong = document.querySelector("#id_location_lat_long").value
-
-  // Split the string into an array using the comma as the delimiter
-  const coordinatesArray = latLong.split(',');
-
-  document.querySelector("#id_lat").value =  parseFloat(coordinatesArray[0]);
-  document.querySelector("#id_long").value =  parseFloat(coordinatesArray[1]);
-
-  })
+ 
 
 </script>
 {% endblock %}

@@ -54,6 +54,8 @@ ALLOWED_HOSTS = ['onedream.dynamicdigital.guru',
 INSTALLED_APPS = [
     # 'admin_reorder',
     'location_field.apps.DefaultConfig',
+    
+    'clearcache',
 
     'django.contrib.admin',
     'django.contrib.auth',

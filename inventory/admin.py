@@ -32,9 +32,9 @@ class InventoryAdmin(ImportExportModelAdmin):
                 'id' : inventory.id,
                 'lat': float(inventory.lat) if inventory.lat is not None else '',
                 'long': float(inventory.long) if inventory.long is not None else '',
-                'location': inventory.location if inventory.location is not None else '',
                 'title': inventory.title,
-                'feature_image': 'https://onedream.dynamicdigital.guru' + inventory.featureImage.url if inventory.featureImage else '',  # Use the 'url' attribute
+                # 'location': inventory.location if inventory.location is not None else '',
+                # 'feature_image': 'https://onedream.dynamicdigital.guru' + inventory.featureImage.url if inventory.featureImage else '',  # Use the 'url' attribute
             }
             for inventory in queryset
         ]        

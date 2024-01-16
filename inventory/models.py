@@ -60,7 +60,7 @@ class Inventory(models.Model):
     propertyType = models.ForeignKey(PropertyType, on_delete=models.PROTECT, default=1)
     propertyTitle = models.CharField(max_length=50, choices=TitleType.choices, default=TitleType.STRATA)
     saleType = models.CharField(max_length=50, choices=SaleType.choices, default=SaleType.FOR_SALE)
-    rentalDeposit = models.CharField(_("Rental Deposit"), max_length=50, null=True)
+    rentalDeposit = models.CharField(_("Rental Deposit"), max_length=50, null=True, blank=True)
     tenure = models.BooleanField(default=False)
 
     slug = models.CharField(max_length=200, unique=True)

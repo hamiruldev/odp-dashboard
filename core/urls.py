@@ -20,6 +20,8 @@ from users.views import signup
 urlpatterns = [
     
     path('', lambda request: HttpResponse('200 Welcome to REST API Interface: Agent-Inventory'), name='home'),
+    
+    path('admin/clearcache/', include('clearcache.urls')),
 
     path('admin/', admin.site.urls),
     path('signup/', signup, name='signup'),
