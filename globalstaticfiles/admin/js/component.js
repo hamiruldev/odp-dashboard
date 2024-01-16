@@ -3,7 +3,7 @@
 // console.log("title", title)
 
 // URL to fetch data from
-var BackEndPath = 'http://127.0.0.1:8000'
+var BackEndPath = 'https://django.tripleonestudio.com'
 var apiUrlBranch = `${BackEndPath}/api/v1/branch/api/branch/?page=1`;
 var apiUrlProfile = `${BackEndPath}/api/v1/profile/`;
 var apiUrlInventory = `${BackEndPath}/api/v1/inventory/`;

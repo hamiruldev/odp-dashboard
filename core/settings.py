@@ -126,7 +126,10 @@ CACHES = {
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-LOCATION_FIELD_PATH = '/static/location_field'
+# Simplified BASE_URL_FE and BASE_URL_BE based on DEBUG value
+LOCATION_FIELD_PATH_CONFIG = '/static' if env('DEBUG') else '/globalstaticfiles'
+
+LOCATION_FIELD_PATH = '/globalstaticfiles/location_field'
 
 LOCATION_FIELD = {
     'search.provider': 'google',
@@ -212,7 +215,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 # Static Root masa kat production, masa run collectstatic ni kena on  . dia akan copy media ke folder static
-STATIC_ROOT = os.path.join(BASE_DIR, 'globalstaticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # staticfiles kat development, masa run collectstatic ni kena off
 # STATICFILES_DIRS = (
@@ -221,20 +224,23 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'globalstaticfiles')
 
 # global staticfiles kat production . dia akan amik media '' ke static_root
 STATICFILES_DIRS = (
-  os.path.join(BASE_DIR, 'static'),
+  os.path.join(BASE_DIR, 'globalstaticfiles'),
 )
 
 # Absolute filesystem path to the directory that will hold static files at production, can test when debug is False
 #STATIC_ROOT = BASE_DIR / "staticfiles"
 
 #folder name for static asset kat development, dia akan pakai bila debug set as true
-STATIC_URL = '/static/'
+STATIC_URL = '/globalstaticfiles/'
 
 IMPORT_EXPORT_USE_TRANSACTIONS = False
 
 # Media Settings
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
 
 
 

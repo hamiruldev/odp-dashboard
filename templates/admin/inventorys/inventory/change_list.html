@@ -5,10 +5,7 @@
 
 {% block extrastyle %}
 {{ block.super }}
-<link rel="stylesheet" type="text/css" href="{% static " admin/css/changelists.css" %}">
-{% if cl.formset %}
-<link rel="stylesheet" type="text/css" href="{% static " admin/css/forms.css" %}">
-{% endif %}
+
 {% if cl.formset or action_form %}
 <script src="{% url 'admin:jsi18n' %}"></script>
 {% endif %}
@@ -356,10 +353,34 @@ https://cdn.jsdelivr.net/npm/@icon/maki-icons@6.2.0-alpha.1/maki-icons.min.css
         <a style="text-decoration: underline;" href='${id}/change/'>${mag}</a>`))
         .addTo(map);
 
+    function changeDomain(url, newDomain) {
+        return url.replace('django.tripleonestudio.com', newDomain);
+    }
+    
+ 
+    
+
+
 
       await axios.get(`${window.location.origin}/api/v1/inventory/${id}`).then((res) => {
-        document.querySelector("#imageFeature").src = res.data.featureImage
+          
+          
+          // Example usage:
+    const oldUrl = res.data.featureImage;
+    const newDomain = 'onedream.dynamicdigital.guru';
+    const newUrl = changeDomain(oldUrl, newDomain);
+          
+          console.log("newDomain", newDomain)
+          
+        document.querySelector("#imageFeature").src = newUrl
+        
+        
       })
+      
+      //   await axios.get(`https://onedream.dynamicdigital.guru/api/v1/inventory/${id}`).then((res) => {
+    //         document.querySelector("#imageFeature").src = res.data.featureImage
+     // })
+
 
     });
 

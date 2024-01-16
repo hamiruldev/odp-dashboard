@@ -4,6 +4,8 @@ db.sqlite3
 htmlcov
 .DS_store
 media/
+globalstaticfiles/
+static/
 venv/
 core/settings.py
 myvenv
