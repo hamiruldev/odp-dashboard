@@ -162,6 +162,7 @@ https://cdn.jsdelivr.net/npm/@icon/maki-icons@6.2.0-alpha.1/maki-icons.min.css
         {% block pagination %}{% pagination cl %}{% endblock %}
       </form>
     </div>
+    
     {% block filters %}
     {% if cl.has_filters %}
     <div id="changelist-filter">
@@ -354,32 +355,23 @@ https://cdn.jsdelivr.net/npm/@icon/maki-icons@6.2.0-alpha.1/maki-icons.min.css
         .addTo(map);
 
     function changeDomain(url, newDomain) {
-        return url.replace('django.tripleonestudio.com', newDomain);
+        return url.replace(window.location.origin, newDomain);
     }
     
  
-    
-
-
-
       await axios.get(`${window.location.origin}/api/v1/inventory/${id}`).then((res) => {
           
-          
           // Example usage:
-    const oldUrl = res.data.featureImage;
-    const newDomain = 'onedream.dynamicdigital.guru';
-    const newUrl = changeDomain(oldUrl, newDomain);
-          
-          console.log("newDomain", newDomain)
-          
+          const oldUrl = res.data.featureImage;
+          const newDomain = 'https://onedream.dynamicdigital.guru';
+          const newUrl = changeDomain(oldUrl, newDomain);
+                        
         document.querySelector("#imageFeature").src = newUrl
-        
-        
       })
       
       //   await axios.get(`https://onedream.dynamicdigital.guru/api/v1/inventory/${id}`).then((res) => {
-    //         document.querySelector("#imageFeature").src = res.data.featureImage
-     // })
+      //         document.querySelector("#imageFeature").src = res.data.featureImage
+      // })
 
 
     });

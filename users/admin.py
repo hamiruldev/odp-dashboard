@@ -18,6 +18,7 @@ from import_export.admin import ImportExportModelAdmin
 from .resource import ReportResource
 
 
+
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = NewUser
@@ -37,7 +38,6 @@ class UserAdminConfig(UserAdmin, ImportExportModelAdmin):
     ordering = ('-user_profile__view_count',)
     list_display = ('username_link', 'user_profile_link', 'introducer', 'branch', 'team', 'is_active', 'get_group_names','listing_admin',)
     autocomplete_fields = ['introducer']
-
     
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm

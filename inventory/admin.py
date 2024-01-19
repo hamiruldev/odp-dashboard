@@ -15,7 +15,7 @@ class InventoryAdmin(ImportExportModelAdmin):
     model = Inventory
     change_list_template = 'admin/inventorys/inventory/change_list.html'
     change_form_template = 'admin/inventorys/inventory/change_form.html'
-    list_display = ("title", 'city','category', "view_count", "inventory_date", 'location' )
+    list_display = ("title", 'city', 'branch', 'category', "view_count", "inventory_date", 'location', )
     search_fields = ('title', 'city',)
     list_filter = ('category','branch', )
     ordering = ('-inventory_date',)
@@ -32,8 +32,8 @@ class InventoryAdmin(ImportExportModelAdmin):
                 'id' : inventory.id,
                 'lat': float(inventory.lat) if inventory.lat is not None else '',
                 'long': float(inventory.long) if inventory.long is not None else '',
-                'title': inventory.title,
                 # 'location': inventory.location if inventory.location is not None else '',
+                'title': inventory.title,
                 # 'feature_image': 'https://onedream.dynamicdigital.guru' + inventory.featureImage.url if inventory.featureImage else '',  # Use the 'url' attribute
             }
             for inventory in queryset

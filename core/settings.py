@@ -126,9 +126,6 @@ CACHES = {
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# Simplified BASE_URL_FE and BASE_URL_BE based on DEBUG value
-LOCATION_FIELD_PATH_CONFIG = '/static' if env('DEBUG') else '/globalstaticfiles'
-
 LOCATION_FIELD_PATH = '/globalstaticfiles/location_field'
 
 LOCATION_FIELD = {
@@ -215,7 +212,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 # Static Root masa kat production, masa run collectstatic ni kena on  . dia akan copy media ke folder static
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'globalstaticfiles')
 
 # staticfiles kat development, masa run collectstatic ni kena off
 # STATICFILES_DIRS = (
@@ -238,9 +235,6 @@ IMPORT_EXPORT_USE_TRANSACTIONS = False
 # Media Settings
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
-
 
 
 

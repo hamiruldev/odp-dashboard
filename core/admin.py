@@ -17,16 +17,13 @@ class CustomAdminSite(admin.AdminSite):
         
         # permission = self
         
-        
 
         # Define the custom order of app labels
         custom_order = ['blog', 'branchs', 'inventory', 'profiles', 'teams', 'users']
 
         # Sort the app list based on the custom order
         app_list.sort(key=lambda x: custom_order.index(x['app_label']))
-        
-        print("admin.AdminSite.each_context--->", app_list)
-        
+                
 
         return app_list
 

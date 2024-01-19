@@ -9,7 +9,7 @@
 
 #changelist .changelist-form-container {
     flex: 1 1 auto;
-    min-width: 0;
+    min-width: 100%;
 }
 
 #changelist table {
@@ -133,11 +133,19 @@
 /* FILTER COLUMN */
 
 #changelist-filter {
-    flex: 0 0 240px;
+    flex: 0;
     order: 1;
-    background: var(--darkened-bg);
+    background: black;
     border-left: none;
-    margin: 0 0 0 30px;
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    margin: 0 0 0 0 !important;
+    padding: 10px 0;
+}
+
+#changelist-filter summary{
+    color: white;
 }
 
 #changelist-filter h2 {
@@ -145,7 +153,6 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
     padding: 5px 15px;
-    margin-bottom: 12px;
     border-bottom: none;
 }
 

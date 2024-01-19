@@ -13,6 +13,8 @@ class TeamAdmin(admin.ModelAdmin):
     list_display = ('name', 'founder', 'about', 'calculate_empire', 'team_commision_precent')
     change_list_template = 'admin/teams/team/change_list.html'
     autocomplete_fields = ['founder']
+    search_fields=('name',)
+    
 
     def calculate_empire(self, obj):
         from users.models import NewUser
